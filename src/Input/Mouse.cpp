@@ -1,5 +1,6 @@
 #include "Mouse.h"
 
+using namespace Input;
 using namespace Mouse;
 
 void Mouse::init()

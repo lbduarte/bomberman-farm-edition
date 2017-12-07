@@ -1,6 +1,6 @@
 #include "Window.h"
 
-
+using namespace Graphics;
 using namespace Window;
 
 void Window::create(const char* p_title, int p_width, int p_height)
@@ -88,11 +88,11 @@ bool Window::init()
 
     // Setting callbacks
     glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
-    glfwSetKeyCallback(window, Keyboard::keyCallback);
+    glfwSetKeyCallback(window, Input::Keyboard::keyCallback);
 
-    glfwSetCursorPosCallback(window, Mouse::cursorPosCallback);
-    glfwSetMouseButtonCallback(window, Mouse::mouseButtonCallback);
-    glfwSetScrollCallback(window, Mouse::scrollCallback);
+    glfwSetCursorPosCallback(window, Input::Mouse::cursorPosCallback);
+    glfwSetMouseButtonCallback(window, Input::Mouse::mouseButtonCallback);
+    glfwSetScrollCallback(window, Input::Mouse::scrollCallback);
 
 
     return true;

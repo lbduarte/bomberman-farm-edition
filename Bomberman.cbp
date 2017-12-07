@@ -63,17 +63,23 @@
 			<Add directory="lib" />
 		</Linker>
 		<Unit filename="include/Keyboard.h" />
+		<Unit filename="include/Loader.h" />
 		<Unit filename="include/Mouse.h" />
+		<Unit filename="include/RawModel.h" />
+		<Unit filename="include/Shaders.h" />
 		<Unit filename="include/Window.h" />
-		<Unit filename="src/Keyboard.cpp" />
-		<Unit filename="src/Mouse.cpp" />
-		<Unit filename="src/Window.cpp" />
+		<Unit filename="src/Graphics/Loader.cpp" />
+		<Unit filename="src/Graphics/RawModel.cpp" />
+		<Unit filename="src/Graphics/Window.cpp" />
+		<Unit filename="src/Input/Keyboard.cpp" />
+		<Unit filename="src/Input/Mouse.cpp" />
+		<Unit filename="src/Shaders/Shaders.cpp" />
+		<Unit filename="src/Shaders/shader_fragment.glsl" />
+		<Unit filename="src/Shaders/shader_vertex.glsl" />
 		<Unit filename="src/glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/main.cpp" />
-		<Unit filename="src/shader_fragment.glsl" />
-		<Unit filename="src/shader_vertex.glsl" />
 		<Extensions>
 			<code_completion />
 			<envvars />

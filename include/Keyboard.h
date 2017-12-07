@@ -4,17 +4,19 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-namespace Keyboard
+namespace Input
 {
-    #define MAX_KEYS 500
+    namespace Keyboard
+    {
+        #define MAX_KEYS 500
 
-    static bool keys[MAX_KEYS];
+        static bool keys[MAX_KEYS];
 
-    void init();
-    bool isKeyPressed(int keycode);
+        void init();
+        bool isKeyPressed(int keycode);
 
-    // Keyboard Callbacks
-    void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        // Keyboard Callbacks
+        void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    }
 }
-
 #endif // KEYBOARD_H

@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-
+using namespace Input;
 using namespace Keyboard;
 
 
