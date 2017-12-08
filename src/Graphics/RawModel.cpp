@@ -2,7 +2,7 @@
 
 using namespace Graphics;
 
-RawModel::RawModel(int vaoID, int vertexCount)
+RawModel::RawModel(GLuint vaoID, int vertexCount)
 {
     m_VaoID = vaoID;
     m_VertexCount = vertexCount;
@@ -13,7 +13,7 @@ RawModel::~RawModel()
 
 }
 
-int RawModel::getVaoID()
+GLuint RawModel::getVaoID()
 {
     return m_VaoID;
 }

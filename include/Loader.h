@@ -5,6 +5,7 @@
 #include <glad/glad.h>   // OpenGL 3.3 Context Creation
 #include <GLFW/glfw3.h>  // Windowing Library
 #include "RawModel.h"
+#include <iostream>
 
 namespace Graphics
 {
@@ -17,12 +18,13 @@ namespace Graphics
         public:
             Loader();
             ~Loader();
-            RawModel loadToVAO(GLfloat* positions);
+            RawModel loadToVAO(std::vector<GLfloat> positions, std::vector<GLuint> indices);
             void cleanUp();
 
         private:
             GLuint createVAO();
-            void storeDataInAttributeList(int attributeNumber,GLfloat* data);
+            void storeDataInAttributeList(int attributeNumber, std::vector<GLfloat> data);
+            void bindIndicesBuffer(std::vector<GLuint> data);
             void unbindVAO();
     };
 }

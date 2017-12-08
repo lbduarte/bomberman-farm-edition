@@ -24,6 +24,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 // OpenGL Libraries
 #include <glad/glad.h>   // OpenGL 3.3 Context Creation
@@ -42,6 +43,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Shaders.h"
+#include "Renderer.h"
+#include "Loader.h"
 
 // Screen Resolution
 #define WIDTH   800
@@ -51,30 +54,53 @@
 #define PATH_VERTEX_SHADER "../../src/Shaders/shader_vertex.glsl"
 #define PATH_FRAGMENT_SHADER "../../src/Shaders/shader_fragment.glsl"
 
+
+
 int main()
 {
     Graphics::Window::create("Bomberman - Farm Edition", WIDTH, HEIGHT);
     Input::Keyboard::init();
     Input::Mouse::init();
 
+    Graphics::Loader loader;
+    Graphics::Renderer renderer;
+
+    std::vector<GLfloat> vertices = {
+
+        -0.5f, 0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, 0.5f, 0.0f, 1.0f
+    };
+
+    std::vector<GLuint> indices = {
+        0, 1, 3,
+        3, 1, 2
+    };
+
+    Graphics::RawModel model = loader.loadToVAO(vertices, indices);
+
     // System's GPU information
     const GLubyte *vendor      = glGetString(GL_VENDOR);
-    const GLubyte *renderer    = glGetString(GL_RENDERER);
+    const GLubyte *renderer_gl    = glGetString(GL_RENDERER);
     const GLubyte *glversion   = glGetString(GL_VERSION);
     const GLubyte *glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-    printf("GPU: %s, %s, OpenGL %s, GLSL %s\n", vendor, renderer, glversion, glslversion);
+    printf("GPU: %s, %s, OpenGL %s, GLSL %s\n", vendor, renderer_gl, glversion, glslversion);
 
     // Setting up shaders
-    GLuint vertex_shader_id = Shaders::LoadShader_Vertex(PATH_VERTEX_SHADER);
-    GLuint fragment_shader_id = Shaders::LoadShader_Fragment(PATH_FRAGMENT_SHADER);
-    GLuint program_id = Shaders::CreateGpuProgram(vertex_shader_id, fragment_shader_id);
+    //GLuint vertex_shader_id = Shaders::LoadShader_Vertex(PATH_VERTEX_SHADER);
+    //GLuint fragment_shader_id = Shaders::LoadShader_Fragment(PATH_FRAGMENT_SHADER);
+    //GLuint program_id = Shaders::CreateGpuProgram(vertex_shader_id, fragment_shader_id);
 
     while (!Graphics::Window::shouldClose())
     {
-        Graphics::Window::clearBuffer();
+        renderer.prepare();
+
+        renderer.render(model);
         Graphics::Window::updateScreen();
     }
 
+    loader.cleanUp();
     Graphics::Window::destroy();
 }
 

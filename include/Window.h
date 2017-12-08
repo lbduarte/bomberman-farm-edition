@@ -24,7 +24,6 @@ namespace Graphics
         bool init();
         void destroy();
         void updateScreen();
-        void clearBuffer();
         bool shouldClose();
         int getWidth();
         int getHeight();

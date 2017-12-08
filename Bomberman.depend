@@ -1068,7 +1068,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1512592293 source:c:\users\cliente\desktop\bomberman farm edition\src\main.cpp
+1512724810 source:c:\users\cliente\desktop\bomberman farm edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -1076,6 +1076,7 @@
 	<string>
 	<fstream>
 	<sstream>
+	<vector>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<glm/mat4x4.hpp>
@@ -1086,6 +1087,8 @@
 	"Keyboard.h"
 	"Mouse.h"
 	"Shaders.h"
+	"Renderer.h"
+	"Loader.h"
 
 1512524496 c:\users\cliente\desktop\bomberman farm edition\include\glfw\glfw3.h
 	<stddef.h>
@@ -1534,7 +1537,7 @@
 1512524496 c:\users\cliente\desktop\bomberman farm edition\include\glm\matrix.hpp
 	"detail/func_matrix.hpp"
 
-1512592230 c:\users\cliente\desktop\bomberman farm edition\include\window.h
+1512715642 c:\users\cliente\desktop\bomberman farm edition\include\window.h
 	<iostream>
 	<cstdio>
 	<glad/glad.h>
@@ -1572,7 +1575,9 @@
 1512530302 source:c:\users\cliente\desktop\bomberman farm edition\src\rawmodel.cpp
 	"RawModel.h"
 
-1512618835 c:\users\cliente\desktop\bomberman farm edition\include\rawmodel.h
+1512718199 c:\users\cliente\desktop\bomberman farm edition\include\rawmodel.h
+	<glad/glad.h>
+	<GLFW/glfw3.h>
 
 1512530302 source:c:\users\cliente\desktop\bomberman farm edition\src\input\keyboard.cpp
 	"Keyboard.h"
@@ -1586,9 +1591,27 @@
 1512526426 source:c:\users\cliente\desktop\bomberman farm edition\src\shaders\shaders.cpp
 	"Shaders.h"
 
-1512615071 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\rawmodel.cpp
+1512718190 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\rawmodel.cpp
 	"RawModel.h"
 
-1512592214 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\window.cpp
+1512715642 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\window.cpp
 	"Window.h"
+
+1512724685 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\loader.cpp
+	"Loader.h"
+
+1512724470 c:\users\cliente\desktop\bomberman farm edition\include\loader.h
+	<vector>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"RawModel.h"
+	<iostream>
+
+1512716129 c:\users\cliente\desktop\bomberman farm edition\include\renderer.h
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"RawModel.h"
+
+1512724685 source:c:\users\cliente\desktop\bomberman farm edition\src\renderer.cpp
+	"Renderer.h"
 
