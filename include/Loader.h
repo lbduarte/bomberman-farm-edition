@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>  // Windowing Library
 #include "RawModel.h"
 #include <iostream>
+#include <cstdio>
 
 namespace Graphics
 {
