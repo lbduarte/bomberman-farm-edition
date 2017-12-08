@@ -65,7 +65,7 @@ int main()
     Graphics::Loader loader;
     Graphics::Renderer renderer;
 
-    std::vector<GLfloat> vertices = {
+    std::vector<GLfloat> model_coefficients = {
 
         -0.5f, 0.5f, 0.0f, 1.0f,
         -0.5f, -0.5f, 0.0f, 1.0f,
@@ -78,7 +78,15 @@ int main()
         3, 1, 2
     };
 
-    Graphics::RawModel model = loader.loadToVAO(vertices, indices);
+    std::vector<GLfloat> color_coefficients = {
+
+        1.0f, 0.5f, 0.0f, 1.0f, // cor do vértice 0
+        1.0f, 0.5f, 0.0f, 1.0f, // cor do vértice 1
+        0.0f, 0.5f, 1.0f, 1.0f, // cor do vértice 2
+        0.0f, 0.5f, 1.0f, 1.0f // cor do vértice 3
+    };
+
+    Graphics::RawModel model = loader.loadToVAO(model_coefficients, indices, color_coefficients);
 
     // System's GPU information
     const GLubyte *vendor      = glGetString(GL_VENDOR);

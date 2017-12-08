@@ -12,14 +12,14 @@ Loader::~Loader()
 
 }
 
-RawModel Loader::loadToVAO(std::vector<GLfloat> positions, std::vector<GLuint> indices)
+RawModel Loader::loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices, std::vector<GLfloat> color_coefficients)
 {
 
     GLuint vaoID = createVAO();
     bindIndicesBuffer(indices);
-    storeDataInAttributeList(0, positions);
+    storeDataInAttributeList(POSITION, model_coefficients);
+    storeDataInAttributeList(COLOR, color_coefficients);
     unbindVAO();
-    // We divide by 4 because each vertex has 4 components (X, Y, Z, W)
     RawModel model(vaoID, indices.size());
     return model;
 }
@@ -46,15 +46,18 @@ GLuint Loader::createVAO()
     return vaoID;
 }
 
-void Loader::storeDataInAttributeList(int attributeNumber, std::vector<GLfloat> data)
+void Loader::storeDataInAttributeList(Location location, std::vector<GLfloat> data)
 {
     GLuint vboID;
     glGenBuffers(1, &vboID);
     vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GL_FLOAT), &data.at(0), GL_STATIC_DRAW);
-    glVertexAttribPointer(attributeNumber, 4, GL_FLOAT, false, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GL_FLOAT), NULL, GL_STATIC_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, data.size() * sizeof(GL_FLOAT), &data.at(0));
+    glVertexAttribPointer(location, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(location);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    printf("loc %d", location);
 }
 
 void Loader::bindIndicesBuffer(std::vector<GLuint> data)
