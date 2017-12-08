@@ -50,9 +50,7 @@
 #define WIDTH   800
 #define HEIGHT  600
 
-// PATH to GLSL shaders
-#define PATH_VERTEX_SHADER "../../src/Shaders/shader_vertex.glsl"
-#define PATH_FRAGMENT_SHADER "../../src/Shaders/shader_fragment.glsl"
+
 
 
 
@@ -88,18 +86,18 @@ int main()
     printf("GPU: %s, %s, OpenGL %s, GLSL %s\n", vendor, renderer_gl, glversion, glslversion);
 
     // Setting up shaders
-    //GLuint vertex_shader_id = Shaders::LoadShader_Vertex(PATH_VERTEX_SHADER);
-    //GLuint fragment_shader_id = Shaders::LoadShader_Fragment(PATH_FRAGMENT_SHADER);
-    //GLuint program_id = Shaders::CreateGpuProgram(vertex_shader_id, fragment_shader_id);
+    Shaders::setup();
 
     while (!Graphics::Window::shouldClose())
     {
         renderer.prepare();
-
+        Shaders::start();
         renderer.render(model);
+        Shaders::stop();
         Graphics::Window::updateScreen();
     }
 
+    Shaders::cleanUp();
     loader.cleanUp();
     Graphics::Window::destroy();
 }

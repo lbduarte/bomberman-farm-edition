@@ -67,26 +67,27 @@ void Shaders::LoadShader(const char* filename, GLuint shader_id)
     delete [] log;
 }
 
-GLuint Shaders::LoadShader_Vertex(const char* filename)
+void Shaders::LoadShader_Vertex(const char* filename)
 {
-    GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
+    vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
     LoadShader(filename, vertex_shader_id);
-    return vertex_shader_id;
+
 }
 
-GLuint Shaders::LoadShader_Fragment(const char* filename)
+void Shaders::LoadShader_Fragment(const char* filename)
 {
-    GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+    fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
     LoadShader(filename, fragment_shader_id);
-    return fragment_shader_id;
 }
 
-GLuint Shaders::CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id)
+void Shaders::CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id)
 {
-    GLuint program_id = glCreateProgram();
+    program_id = glCreateProgram();
 
     glAttachShader(program_id, vertex_shader_id);
     glAttachShader(program_id, fragment_shader_id);
+
+    bindAttributes();
 
     // Linking process
     glLinkProgram(program_id);
@@ -119,5 +120,42 @@ GLuint Shaders::CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader
         fprintf(stderr, "%s", output.c_str());
     }
 
-    return program_id;
+}
+
+void Shaders::start()
+{
+    glUseProgram(program_id);
+}
+
+void Shaders::stop()
+{
+    glUseProgram(0);
+}
+
+void Shaders::cleanUp()
+{
+    stop();
+    glDetachShader(program_id, vertex_shader_id);
+    glDetachShader(program_id, fragment_shader_id);
+    glDeleteShader(vertex_shader_id);
+    glDeleteShader(fragment_shader_id);
+    glDeleteProgram(program_id);
+
+}
+
+void Shaders::bindAttributes()
+{
+    bindAttribute(0, "position");
+}
+
+void Shaders::bindAttribute(int attribute, const char* variableName)
+{
+    glBindAttribLocation(program_id, attribute, variableName);
+}
+
+void Shaders::setup()
+{
+    LoadShader_Vertex(PATH_VERTEX_SHADER);
+    LoadShader_Fragment(PATH_FRAGMENT_SHADER);
+    CreateGpuProgram(vertex_shader_id, fragment_shader_id);
 }
