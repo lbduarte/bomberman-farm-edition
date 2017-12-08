@@ -18,12 +18,16 @@ namespace Graphics
         public:
             Loader();
             ~Loader();
-            RawModel loadToVAO(std::vector<GLfloat> positions, std::vector<GLuint> indices);
+            RawModel loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices, std::vector<GLfloat> color_coefficients);
             void cleanUp();
 
         private:
+            enum Location {
+                POSITION,
+                COLOR
+            };
             GLuint createVAO();
-            void storeDataInAttributeList(int attributeNumber, std::vector<GLfloat> data);
+            void storeDataInAttributeList(Location location, std::vector<GLfloat> data);
             void bindIndicesBuffer(std::vector<GLuint> data);
             void unbindVAO();
     };
