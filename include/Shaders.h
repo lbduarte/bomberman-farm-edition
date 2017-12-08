@@ -9,15 +9,33 @@
 
 namespace Shaders
 {
+    // PATH to GLSL shaders
+    #define PATH_VERTEX_SHADER "../../src/Shaders/shader_vertex.glsl"
+    #define PATH_FRAGMENT_SHADER "../../src/Shaders/shader_fragment.glsl"
+
+    static GLuint program_id;
+    static GLuint vertex_shader_id;
+    static GLuint fragment_shader_id;
+
     // Load a shader from a GLSL file
     void LoadShader(const char* filename, GLuint shader_id);
 
     // Shader loader for each kind of shader
-    GLuint LoadShader_Vertex(const char* filename);
-    GLuint LoadShader_Fragment(const char* filename);
+    void LoadShader_Vertex(const char* filename);
+    void LoadShader_Fragment(const char* filename);
 
     // Uses the shaders to create a program that runs on the GPU
-    GLuint CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id);
+    void CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id);
+
+    void setup();
+    void start();
+    void stop();
+    void cleanUp();
+    void bindAttributes();
+    void bindAttribute(int attribute, const char* variableName);
+
+
+
 }
 
 #endif // SHADERS_H
