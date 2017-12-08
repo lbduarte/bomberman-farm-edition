@@ -36,9 +36,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // Local Headers located in folder "include/"
-#include "matrices.h"
-
-// Windowing
 #include "Window.h"
 #include "Keyboard.h"
 #include "Mouse.h"
