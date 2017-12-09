@@ -145,10 +145,14 @@ void Shaders::cleanUp()
 
 void Shaders::bindAttributes()
 {
-    bindAttribute(0, "position");
+    bindAttribute(POSITION, "position");
+    bindAttribute(COLOR, "color");
+    bindAttribute(NORMAL, "normal");
+    bindAttribute(TEXTURE, "texture");
+
 }
 
-void Shaders::bindAttribute(int attribute, const char* variableName)
+void Shaders::bindAttribute(AttributeLocation attribute, const char* variableName)
 {
     glBindAttribLocation(program_id, attribute, variableName);
 }

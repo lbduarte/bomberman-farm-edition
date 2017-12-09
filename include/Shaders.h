@@ -7,6 +7,8 @@
 #include <sstream>
 #include <cstdlib>
 
+#include "AttributeLocation.h"
+
 namespace Shaders
 {
     // PATH to GLSL shaders
@@ -32,10 +34,7 @@ namespace Shaders
     void stop();
     void cleanUp();
     void bindAttributes();
-    void bindAttribute(int attribute, const char* variableName);
-
-
-
+    void bindAttribute(AttributeLocation attribute, const char* variableName);
 }
 
 #endif // SHADERS_H

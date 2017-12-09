@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>  // Windowing Library
 #include "RawModel.h"
 #include "ObjModel.h"
+#include "AttributeLocation.h"
 #include <iostream>
 #include <cstdio>
 
@@ -21,15 +22,12 @@ namespace Graphics
             Loader();
             ~Loader();
             RawModel loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices, std::vector<GLfloat> color_coefficients);
+            RawModel loadObjToVAO(ObjModel object);
             void cleanUp();
 
         private:
-            enum Location {
-                POSITION,
-                COLOR
-            };
             GLuint createVAO();
-            void storeDataInAttributeList(Location location, std::vector<GLfloat> data);
+            void storeDataInAttributeList(AttributeLocation location, int number_of_dimensions, std::vector<GLfloat> data);
             void bindIndicesBuffer(std::vector<GLuint> data);
             void unbindVAO();
     };

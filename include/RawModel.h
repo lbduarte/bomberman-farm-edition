@@ -6,8 +6,6 @@
 
 namespace Graphics
 {
-
-
     class RawModel
     {
     private:

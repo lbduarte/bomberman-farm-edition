@@ -81,7 +81,11 @@ int main()
         0.0f, 0.5f, 1.0f, 1.0f // cor do vértice 3
     };
 
-    Graphics::RawModel model = loader.loadToVAO(model_coefficients, indices, color_coefficients);
+    Graphics::ObjModel obj("../../data/bunny.obj");
+    obj.computeNormals();
+    obj.buildTriangles();
+    Graphics::RawModel model = loader.loadObjToVAO(obj);
+    //Graphics::RawModel model = loader.loadToVAO(model_coefficients, indices, color_coefficients);
 
     // System's GPU information
     const GLubyte *vendor      = glGetString(GL_VENDOR);
