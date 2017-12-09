@@ -7,6 +7,7 @@
 #include "RawModel.h"
 #include "ObjModel.h"
 #include <iostream>
+#include <cstdio>
 
 namespace Graphics
 {

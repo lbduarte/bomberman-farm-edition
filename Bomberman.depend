@@ -1068,7 +1068,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1512778717 source:c:\users\cliente\desktop\bomberman farm edition\src\main.cpp
+1512779110 source:c:\users\cliente\desktop\bomberman farm edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -1597,15 +1597,16 @@
 1512766372 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\window.cpp
 	"Window.h"
 
-1512766372 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\loader.cpp
+1512779110 source:c:\users\cliente\desktop\bomberman farm edition\src\graphics\loader.cpp
 	"Loader.h"
 
-1512766371 c:\users\cliente\desktop\bomberman farm edition\include\loader.h
+1512779237 c:\users\cliente\desktop\bomberman farm edition\include\loader.h
 	<vector>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	"RawModel.h"
 	<iostream>
+	<cstdio>
 
 1512766371 c:\users\cliente\desktop\bomberman farm edition\include\renderer.h
 	<glad/glad.h>
