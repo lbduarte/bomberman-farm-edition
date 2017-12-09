@@ -5,6 +5,7 @@
 #include <glad/glad.h>   // OpenGL 3.3 Context Creation
 #include <GLFW/glfw3.h>  // Windowing Library
 #include "RawModel.h"
+#include "ObjModel.h"
 #include <iostream>
 
 namespace Graphics
