@@ -1641,16 +1641,18 @@
 	<inttypes.h>
 	<stdint.h>
 
-1512773792 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\loader.cpp
+1512860703 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\loader.cpp
 	"Loader.h"
 
-1512778138 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\loader.h
+1512858917 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\loader.h
 	<vector>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	"RawModel.h"
 	"ObjModel.h"
+	"AttributeLocation.h"
 	<iostream>
+	<cstdio>
 
 1512695985 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\glfw\glfw3.h
 	<stddef.h>
@@ -1705,7 +1707,7 @@
 1512695986 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\input\mouse.cpp
 	"Mouse.h"
 
-1512779695 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
+1512861010 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -2152,12 +2154,13 @@
 1512695986 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\glm\matrix.hpp
 	"detail/func_matrix.hpp"
 
-1512779695 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\shaders.h
+1512860032 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\shaders.h
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<fstream>
 	<sstream>
 	<cstdlib>
+	"AttributeLocation.h"
 
 1512750338 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\renderer.h
 	<glad/glad.h>
@@ -2167,13 +2170,13 @@
 1512769339 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\renderer.cpp
 	"Renderer.h"
 
-1512779695 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\shaders\shaders.cpp
+1512860218 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\shaders\shaders.cpp
 	"Shaders.h"
 
-1512777626 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\objmodel.cpp
+1512860987 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\objmodel.cpp
 	"ObjModel.h"
 
-1512778155 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\objmodel.h
+1512859122 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\objmodel.h
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<tiny_obj_loader.h>
@@ -2199,4 +2202,9 @@
 
 1512778445 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\matrices.cpp
 	"matrices.h"
+
+1512779695 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\renderer.cpp
+	"Renderer.h"
+
+1512859952 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\attributelocation.h
 
