@@ -41,3 +41,49 @@ void Free::computeViewMatrix()
     viewMatrix = Matrix_Camera_View(position_C, viewVector, upVector);
 }
 
+glm::mat4 Free::getViewMatrix()
+{
+    return viewMatrix;
+}
+
+float Free::getTheta()
+{
+    return theta;
+}
+
+float Free::getPhi()
+{
+    return phi;
+}
+
+float Free::getDistance()
+{
+    return distance;
+}
+
+void Free::updateTheta(float dx)
+{
+    theta -= 0.01f*dx;
+}
+
+void Free::updatePhi(float dy)
+{
+    phi += 0.01f*-dy;
+
+    float phimax = 3.141592f/2;
+    float phimin = -phimax;
+
+    if (phi > phimax)
+        phi = phimax;
+
+    if (phi < phimin)
+        phi = phimin;
+}
+
+void Free::updateDistance(double yoffset)
+{
+    distance -= 0.1f*yoffset;
+
+    if (distance < 0.0f)
+        distance = 0.0f;
+}

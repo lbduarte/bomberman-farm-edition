@@ -13,8 +13,6 @@ namespace Cameras
 {
     namespace Free
     {
-
-
             static float theta;
             static float phi;
             static float distance;
@@ -32,6 +30,14 @@ namespace Cameras
             void init(float a_theta, float a_phi, float a_distance, glm::vec4 camera_position_c, glm::vec4 camera_view_vector);
             void computePosition();
             void computeViewMatrix();
+
+            glm::mat4 getViewMatrix();
+            float getTheta();
+            float getPhi();
+            float getDistance();
+            void updateTheta(float dx);
+            void updatePhi(float dy);
+            void updateDistance(double yoffset);
     }
 }
 #endif // FREECAMERA_H

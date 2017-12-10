@@ -13,6 +13,6 @@ uniform mat4 projection;
 void main()
 {
     gl_Position = projection * view * model * position;
-    interpolated_color = vec4(color);
+    interpolated_color = color;
 
 }

@@ -163,3 +163,8 @@ void Shaders::setup()
     LoadShader_Fragment(PATH_FRAGMENT_SHADER);
     CreateGpuProgram(vertex_shader_id, fragment_shader_id);
 }
+
+GLuint Shaders::getProgramID()
+{
+    return program_id;
+}

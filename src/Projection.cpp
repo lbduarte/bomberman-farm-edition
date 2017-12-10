@@ -11,5 +11,25 @@ void Projection::init()
 
 void Projection::computeProjectionMatrix()
 {
-    projectionMatrix = Matrix_Perspective(field_of_view, Graphics::Window::screenRatio, nearplane, farplane);
+    projectionMatrix = Matrix_Perspective(field_of_view, Graphics::Window::getScreenRatio(), nearplane, farplane);
+}
+
+glm::mat4 Projection::getProjectionMatrix()
+{
+    return projectionMatrix;
+}
+
+float Projection::getNearPlane()
+{
+    return nearplane;
+}
+
+float Projection::getFarPlane()
+{
+    return farplane;
+}
+
+float Projection::getFieldOfView()
+{
+    return field_of_view;
 }
