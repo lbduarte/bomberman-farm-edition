@@ -47,20 +47,17 @@ void Mouse::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
     float dy = ypos - lastCursorY;
 
 
-    Cameras::LookAt::theta -= 0.01f*dx;
-    Cameras::LookAt::phi += 0.01f*dy;
+    Cameras::LookAt::updateTheta(dx);
+    Cameras::LookAt::updatePhi(dy);
+
+    Cameras::Free::updateTheta(dx);
+    Cameras::Free::updatePhi(dy);
 
     Cameras::Free::theta -= 0.01f*dx;
     Cameras::Free::phi += 0.01f*-dy;
 
     float phimax = 3.141592f/2;
     float phimin = -phimax;
-
-    if (Cameras::LookAt::phi > phimax)
-        Cameras::LookAt::phi = phimax;
-
-    if (Cameras::LookAt::phi < phimin)
-        Cameras::LookAt::phi = phimin;
 
     if (Cameras::Free::phi > phimax)
         Cameras::Free::phi = phimax;
@@ -74,8 +71,7 @@ void Mouse::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 
 void Mouse::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    Cameras::LookAt::distance -= 0.1f*yoffset;
+    Cameras::LookAt::updateDistance(yoffset);
 
-    if (Cameras::LookAt::distance < 0.0f)
-        Cameras::LookAt::distance = 0.0f;
+
 }

@@ -28,6 +28,51 @@ void LookAt::computeViewMatrix()
     viewMatrix = Matrix_Camera_View(position_C, viewVector, upVector);
 }
 
+glm::mat4 LookAt::getViewMatrix()
+{
+    return viewMatrix;
+}
 
+float LookAt::getTheta()
+{
+    return theta;
+}
+
+float LookAt::getPhi()
+{
+    return phi;
+}
+
+float LookAt::getDistance()
+{
+    return distance;
+}
+
+void LookAt::updateTheta(float dx)
+{
+    theta -= 0.01f*dx;
+}
+
+void LookAt::updatePhi(float dy)
+{
+    phi += 0.01f*dy;
+
+    float phimax = 3.141592f/2;
+    float phimin = -phimax;
+
+    if (phi > phimax)
+        phi = phimax;
+
+    if (phi < phimin)
+        phi = phimin;
+}
+
+void LookAt::updateDistance(double yoffset)
+{
+    distance -= 0.1f*yoffset;
+
+    if (distance < 0.0f)
+        distance = 0.0f;
+}
 
 

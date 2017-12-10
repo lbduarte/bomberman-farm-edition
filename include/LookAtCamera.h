@@ -28,6 +28,15 @@ namespace Cameras
             void init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point);
             void computePosition();
             void computeViewMatrix();
+
+            glm::mat4 getViewMatrix();
+            float getTheta();
+            float getPhi();
+            float getDistance();
+            void updateTheta(float dx);
+            void updatePhi(float dy);
+            void updateDistance(double yoffset);
+
     }
 }
 

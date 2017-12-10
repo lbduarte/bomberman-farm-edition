@@ -112,11 +112,12 @@ int main()
 
         renderer.prepare();
         Shaders::start();
-        Cameras::LookAt::computePosition();
-        Cameras::LookAt::computeViewMatrix();
+        Cameras::Free::computePosition();
+        Cameras::Free::computeViewMatrix();
+        Projection::init();
         Projection::computeProjectionMatrix();
-        glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::LookAt::viewMatrix));
-        glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::projectionMatrix));
+        glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
+        glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
         modelMatrix = Matrix_Identity();
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         renderer.render(model);

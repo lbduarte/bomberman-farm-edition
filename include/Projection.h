@@ -17,6 +17,10 @@ namespace Projection
 
     void init();
     void computeProjectionMatrix();
+    glm::mat4 getProjectionMatrix();
+    float getNearPlane();
+    float getFarPlane();
+    float getFieldOfView();
 };
 
 #endif // PROJECTION_H
