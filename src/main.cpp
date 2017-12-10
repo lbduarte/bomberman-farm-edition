@@ -102,9 +102,9 @@ int main()
     // Setting up shaders
     Shaders::setup();
 
-    GLint model_uniform           = glGetUniformLocation(Shaders::program_id, "model");
-    GLint view_uniform            = glGetUniformLocation(Shaders::program_id, "view");
-    GLint projection_uniform      = glGetUniformLocation(Shaders::program_id, "projection");
+    GLint model_uniform           = glGetUniformLocation(Shaders::getProgramID(), "model");
+    GLint view_uniform            = glGetUniformLocation(Shaders::getProgramID(), "view");
+    GLint projection_uniform      = glGetUniformLocation(Shaders::getProgramID(), "projection");
     glm::mat4 modelMatrix;
 
     while (!Graphics::Window::shouldClose())

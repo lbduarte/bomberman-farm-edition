@@ -75,7 +75,6 @@
 		<Unit filename="include/Shaders.h" />
 		<Unit filename="include/Window.h" />
 		<Unit filename="include/matrices.h" />
-		<Unit filename="include/tiny_obj_loader.h" />
 		<Unit filename="src/FreeCamera.cpp" />
 		<Unit filename="src/Graphics/Loader.cpp" />
 		<Unit filename="src/Graphics/ObjModel.cpp" />

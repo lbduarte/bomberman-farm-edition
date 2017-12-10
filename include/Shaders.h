@@ -35,6 +35,7 @@ namespace Shaders
     void cleanUp();
     void bindAttributes();
     void bindAttribute(AttributeLocation attribute, const char* variableName);
+    GLuint getProgramID();
 }
 
 #endif // SHADERS_H
