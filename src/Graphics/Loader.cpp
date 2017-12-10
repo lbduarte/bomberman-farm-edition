@@ -27,7 +27,6 @@ RawModel Loader::loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<
 RawModel Loader::loadObjToVAO(ObjModel object)
 {
     GLuint vaoID = createVAO();
-    printf("%d", object.getModelCoefficients().size());
     storeDataInAttributeList(POSITION, 4, object.getModelCoefficients());
     if ( !object.getNormalCoefficients().empty() )
         storeDataInAttributeList(NORMAL, 4, object.getNormalCoefficients());
@@ -72,7 +71,6 @@ void Loader::storeDataInAttributeList(AttributeLocation location, int number_of_
     glVertexAttribPointer(location, number_of_dimensions, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(location);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    printf("loc %d", location);
 }
 
 void Loader::bindIndicesBuffer(std::vector<GLuint> data)
