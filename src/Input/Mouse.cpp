@@ -40,6 +40,9 @@ void Mouse::mouseButtonCallback(GLFWwindow* window, int button, int action, int 
 
 void Mouse::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
+    if (!mouseButtons[GLFW_MOUSE_BUTTON_LEFT])
+        return;
+
     cursorX = xpos;
     cursorY = ypos;
 

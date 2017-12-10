@@ -19,7 +19,7 @@ void Free::computePosition()
     y = r * sin(phi);
     z = r * cos(phi) * cos(theta);
     x = r * cos(phi) * sin(theta);
-    incVector = 0.05f * viewVector;
+    incVector = 0.03f * viewVector;
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_D))
         position_C -= crossproduct(upVector, incVector);

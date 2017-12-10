@@ -145,10 +145,10 @@ void Shaders::cleanUp()
 
 void Shaders::bindAttributes()
 {
-    bindAttribute(POSITION, "position");
-    bindAttribute(COLOR, "color");
-    bindAttribute(NORMAL, "normal");
-    bindAttribute(TEXTURE, "texture");
+    bindAttribute(POSITION, "model_coefficients");
+    bindAttribute(COLOR, "color_coefficients");
+    bindAttribute(NORMAL, "normal_coefficients");
+    bindAttribute(TEXTURE, "texture_coefficients");
 
 }
 
