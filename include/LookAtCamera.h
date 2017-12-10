@@ -3,35 +3,32 @@
 
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "matrices.h"
 
-class LookAtCamera
+namespace Cameras
 {
-    private:
-        float m_Theta;
-        float m_Phi;
-        float m_Distance;
-        float r;
-        float y;
-        float z;
-        float x;
-        glm::vec4 m_Position_C;
-        glm::vec4 m_LookAt_L;
-        glm::vec4 m_View_Vector;
-        glm::vec4 m_Up_Vector;
-        glm::mat4 m_View_Matrix;
+    namespace LookAt
+    {
 
-    public:
-        LookAtCamera(float theta, float phi, float distance, glm::vec4 lookat_point);
-        ~LookAtCamera();
-        void computePosition();
-        void computeView();
-        glm::mat4 getViewMatrix();
-        float getTheta();
-        float getPhi();
-        float getDistance();
+            static float theta;
+            static float phi;
+            static float distance;
+            static float r;
+            static float y;
+            static float z;
+            static float x;
+            static glm::vec4 position_C;
+            static glm::vec4 lookAt_L;
+            static glm::vec4 viewVector;
+            static glm::vec4 upVector;
+            static glm::mat4 viewMatrix;
 
-    private:
-};
+
+            void init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point);
+            void computePosition();
+            void computeViewMatrix();
+    }
+}
 
 #endif // LOOKATCAMERA_H

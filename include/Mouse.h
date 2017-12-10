@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "FreeCamera.h"
+#include "LookAtCamera.h"
 
 namespace Input
 {
@@ -15,6 +17,8 @@ namespace Input
         // Cursor position relative to the window
         static double cursorX;
         static double cursorY;
+        static double lastCursorX;
+        static double lastCursorY;
 
         void init();
         bool isMouseButtonPressed(int buttonCode);

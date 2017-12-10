@@ -69,6 +69,7 @@
 		<Unit filename="include/LookAtCamera.h" />
 		<Unit filename="include/Mouse.h" />
 		<Unit filename="include/ObjModel.h" />
+		<Unit filename="include/Projection.h" />
 		<Unit filename="include/RawModel.h" />
 		<Unit filename="include/Renderer.h" />
 		<Unit filename="include/Shaders.h" />
@@ -84,6 +85,7 @@
 		<Unit filename="src/Input/Keyboard.cpp" />
 		<Unit filename="src/Input/Mouse.cpp" />
 		<Unit filename="src/LookAtCamera.cpp" />
+		<Unit filename="src/Projection.cpp" />
 		<Unit filename="src/Shaders/Shaders.cpp" />
 		<Unit filename="src/Shaders/shader_fragment.glsl" />
 		<Unit filename="src/Shaders/shader_vertex.glsl" />

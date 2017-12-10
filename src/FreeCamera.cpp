@@ -1,64 +1,43 @@
 #include "FreeCamera.h"
 
-FreeCamera::FreeCamera(float theta, float phi, float distance, glm::vec4 camera_position_c, glm::vec4 camera_view_vector)
+using namespace Cameras;
+using namespace Free;
+
+void Free::init(float a_theta, float a_phi, float a_distance, glm::vec4 camera_position_c, glm::vec4 camera_view_vector)
 {
-    m_Theta = theta;
-    m_Phi = phi;
-    m_Distance = distance;
-    m_View_Vector = camera_view_vector;
-    m_Position_C = camera_position_c;
-    m_Up_Vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+    theta = a_theta;
+    phi = a_phi;
+    distance = a_distance;
+    viewVector = camera_view_vector;
+    position_C = camera_position_c;
+    upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 }
 
-FreeCamera::~FreeCamera()
+void Free::computePosition()
 {
-    //dtor
-}
-
-void FreeCamera::computePosition()
-{
-    r = m_Distance;
-    y = r * sin(m_Phi);
-    z = r * cos(m_Phi) * cos(m_Theta);
-    x = r * cos(m_Phi) * sin(m_Theta);
-    m_Inc_Vector = 0.05f * m_View_Vector;
+    r = distance;
+    y = r * sin(phi);
+    z = r * cos(phi) * cos(theta);
+    x = r * cos(phi) * sin(theta);
+    incVector = 0.05f * viewVector;
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_D))
-        m_Position_C -= crossproduct(m_Up_Vector, m_Inc_Vector);
+        position_C -= crossproduct(upVector, incVector);
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_A))
-        m_Position_C += crossproduct(m_Up_Vector, m_Inc_Vector);
+        position_C += crossproduct(upVector, incVector);
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_W))
-        m_Position_C += m_Inc_Vector;
+        position_C += incVector;
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_S))
-        m_Position_C -= m_Inc_Vector;
+        position_C -= incVector;
 
-    m_View_Vector = glm::vec4(x, y, z, 0.0f);
+    viewVector = glm::vec4(x, y, z, 0.0f);
 }
 
-void FreeCamera::computeView()
+void Free::computeViewMatrix()
 {
-    m_View_Matrix = Matrix_Camera_View(m_Position_C, m_View_Vector, m_Up_Vector);
+    viewMatrix = Matrix_Camera_View(position_C, viewVector, upVector);
 }
 
-glm::mat4 FreeCamera::getViewMatrix()
-{
-    return m_View_Matrix;
-}
-
-float FreeCamera::getTheta()
-{
-    return m_Theta;
-}
-
-float FreeCamera::getPhi()
-{
-    return m_Phi;
-}
-
-float FreeCamera::getDistance()
-{
-    return m_Distance;
-}
