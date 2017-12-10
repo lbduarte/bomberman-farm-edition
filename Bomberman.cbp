@@ -63,10 +63,8 @@
 			<Add directory="lib" />
 		</Linker>
 		<Unit filename="include/AttributeLocation.h" />
-		<Unit filename="include/FreeCamera.h" />
 		<Unit filename="include/Keyboard.h" />
 		<Unit filename="include/Loader.h" />
-		<Unit filename="include/LookAtCamera.h" />
 		<Unit filename="include/Mouse.h" />
 		<Unit filename="include/ObjModel.h" />
 		<Unit filename="include/RawModel.h" />
@@ -74,8 +72,6 @@
 		<Unit filename="include/Shaders.h" />
 		<Unit filename="include/Window.h" />
 		<Unit filename="include/matrices.h" />
-		<Unit filename="include/tiny_obj_loader.h" />
-		<Unit filename="src/FreeCamera.cpp" />
 		<Unit filename="src/Graphics/Loader.cpp" />
 		<Unit filename="src/Graphics/ObjModel.cpp" />
 		<Unit filename="src/Graphics/RawModel.cpp" />
@@ -83,7 +79,6 @@
 		<Unit filename="src/Graphics/Window.cpp" />
 		<Unit filename="src/Input/Keyboard.cpp" />
 		<Unit filename="src/Input/Mouse.cpp" />
-		<Unit filename="src/LookAtCamera.cpp" />
 		<Unit filename="src/Shaders/Shaders.cpp" />
 		<Unit filename="src/Shaders/shader_fragment.glsl" />
 		<Unit filename="src/Shaders/shader_vertex.glsl" />
