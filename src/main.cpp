@@ -42,6 +42,9 @@
 #include "Shaders.h"
 #include "Renderer.h"
 #include "Loader.h"
+#include "LookAtCamera.h"
+#include "FreeCamera.h"
+#include "Projection.h"
 
 // Screen Resolution
 #define WIDTH   800
@@ -59,6 +62,8 @@ int main()
 
     Graphics::Loader loader;
     Graphics::Renderer renderer;
+    Cameras::LookAt::init(0.0f, 0.0f, 2.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    Cameras::Free::init(0.0f, 0.0f, 2.5f, glm::vec4(0.0f, 0.0f, 2.5f, 1.0f), glm::vec4(0.0f, 0.0f, -2.5f, 0.0f));
 
     std::vector<GLfloat> model_coefficients = {
 
@@ -97,10 +102,23 @@ int main()
     // Setting up shaders
     Shaders::setup();
 
+    GLint model_uniform           = glGetUniformLocation(Shaders::program_id, "model");
+    GLint view_uniform            = glGetUniformLocation(Shaders::program_id, "view");
+    GLint projection_uniform      = glGetUniformLocation(Shaders::program_id, "projection");
+    glm::mat4 modelMatrix;
+
     while (!Graphics::Window::shouldClose())
     {
+
         renderer.prepare();
         Shaders::start();
+        Cameras::LookAt::computePosition();
+        Cameras::LookAt::computeViewMatrix();
+        Projection::computeProjectionMatrix();
+        glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::LookAt::viewMatrix));
+        glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::projectionMatrix));
+        modelMatrix = Matrix_Identity();
+        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         renderer.render(model);
         Shaders::stop();
         Graphics::Window::updateScreen();

@@ -1,50 +1,33 @@
 #include "LookAtCamera.h"
 
-LookAtCamera::LookAtCamera(float theta, float phi, float distance, glm::vec4 lookat_point)
+using namespace Cameras;
+using namespace LookAt;
+
+void LookAt::init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point)
 {
-    m_Theta = theta;
-    m_Phi = phi;
-    m_Distance = distance;
-    m_LookAt_L = lookat_point;
-    m_Up_Vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+    theta = a_theta;
+    phi = a_phi;
+    distance = a_distance;
+    lookAt_L = lookat_point;
+    upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 }
 
-LookAtCamera::~LookAtCamera()
+void LookAt::computePosition()
 {
+    r = distance;
+    y = r * sin(phi);
+    z = r * cos(phi) * cos(theta);
+    x = r * cos(phi) * sin(theta);
+    position_C = glm::vec4(x, y, z, 1.0f);
+    viewVector = lookAt_L - position_C;
 
 }
 
-void LookAtCamera::computePosition()
+void LookAt::computeViewMatrix()
 {
-    r = m_Distance;
-    y = r * sin(m_Phi);
-    z = r * cos(m_Phi) * cos(m_Theta);
-    x = r * cos(m_Phi) * sin(m_Theta);
-    m_Position_C = glm::vec4(x, y, z, 1.0f);
-    m_View_Vector = m_LookAt_L - m_Position_C;
+    viewMatrix = Matrix_Camera_View(position_C, viewVector, upVector);
 }
 
-void LookAtCamera::computeView()
-{
-    m_View_Matrix = Matrix_Camera_View(m_Position_C, m_View_Vector, m_Up_Vector);
-}
 
-glm::mat4 LookAtCamera::getViewMatrix()
-{
-    return m_View_Matrix;
-}
 
-float LookAtCamera::getTheta()
-{
-    return m_Theta;
-}
 
-float LookAtCamera::getPhi()
-{
-    return m_Phi;
-}
-
-float LookAtCamera::getDistance()
-{
-    return m_Distance;
-}
