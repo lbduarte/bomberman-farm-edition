@@ -5,7 +5,7 @@ using namespace Projection;
 void Projection::init()
 {
     nearplane = -0.1f;
-    farplane = -10.0f;
+    farplane = -30.0f;
     field_of_view = 3.141592 / 3.0f;
 }
 

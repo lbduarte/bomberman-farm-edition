@@ -68,7 +68,7 @@ void Free::updateTheta(float dx)
 
 void Free::updatePhi(float dy)
 {
-    phi += 0.01f*-dy;
+    phi += 0.01f*dy;
 
     float phimax = 3.141592f/2;
     float phimin = -phimax;

@@ -10,7 +10,6 @@ namespace Cameras
 {
     namespace LookAt
     {
-
             static float theta;
             static float phi;
             static float distance;

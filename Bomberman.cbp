@@ -74,6 +74,7 @@
 		<Unit filename="include/RawModel.h" />
 		<Unit filename="include/Renderer.h" />
 		<Unit filename="include/Shaders.h" />
+		<Unit filename="include/VirtualScene.h" />
 		<Unit filename="include/Window.h" />
 		<Unit filename="include/matrices.h" />
 		<Unit filename="src/FreeCamera.cpp" />
@@ -81,6 +82,7 @@
 		<Unit filename="src/Graphics/ObjModel.cpp" />
 		<Unit filename="src/Graphics/RawModel.cpp" />
 		<Unit filename="src/Graphics/Renderer.cpp" />
+		<Unit filename="src/Graphics/VirtualScene.cpp" />
 		<Unit filename="src/Graphics/Window.cpp" />
 		<Unit filename="src/Input/Keyboard.cpp" />
 		<Unit filename="src/Input/Mouse.cpp" />
