@@ -3,7 +3,8 @@
 #define OBJECTID_H
 
 enum ObjectID {
-                PLAN,
+                FLOOR,
+                WALL,
                 CUBE
             };
 

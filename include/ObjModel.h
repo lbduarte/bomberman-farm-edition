@@ -31,7 +31,6 @@ namespace Graphics
             std::vector<float> getModelCoefficients();
             std::vector<float> getNormalCoefficients();
             std::vector<float> getTextureCoefficients();
-
         private:
     };
 }

@@ -9,6 +9,7 @@
 #include "AttributeLocation.h"
 #include <iostream>
 #include <cstdio>
+#include <stb_image.h>
 
 namespace Graphics
 {
@@ -18,12 +19,14 @@ namespace Graphics
         private:
             std::vector<GLuint> vaos;
             std::vector<GLuint> vbos;
+            int g_NumLoadedTextures = 0;
         public:
             Loader();
             ~Loader();
             RawModel loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices, std::vector<GLfloat> color_coefficients);
             RawModel loadObjToVAO(ObjModel object);
             void cleanUp();
+            void loadTextureImage(const char* filename);
 
         private:
             GLuint createVAO();

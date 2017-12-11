@@ -96,6 +96,9 @@ void ObjModel::buildTriangles()
         size_t first_index = this->indices.size();
         size_t num_triangles = this->shapes[shape].mesh.num_face_vertices.size();
 
+        const float minval = std::numeric_limits<float>::min();
+        const float maxval = std::numeric_limits<float>::max();
+
         for (size_t triangle = 0; triangle < num_triangles; ++triangle)
         {
             assert(this->shapes[shape].mesh.num_face_vertices[triangle] == 3);
