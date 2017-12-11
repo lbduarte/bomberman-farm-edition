@@ -36,15 +36,18 @@ void Mouse::getCursorPosition(double &x, double &y)
 void Mouse::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     mouseButtons[button] = action != GLFW_RELEASE;
+
+
+    getCursorPosition(lastCursorX, lastCursorY);
 }
 
 void Mouse::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
-    if (!mouseButtons[GLFW_MOUSE_BUTTON_LEFT])
-        return;
-
     cursorX = xpos;
     cursorY = ypos;
+
+    if (!mouseButtons[GLFW_MOUSE_BUTTON_LEFT])
+        return;
 
     float dx = xpos - lastCursorX;
     float dy = ypos - lastCursorY;
