@@ -1641,10 +1641,10 @@
 	<inttypes.h>
 	<stdint.h>
 
-1512963827 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\loader.cpp
+1513033446 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\loader.cpp
 	"Loader.h"
 
-1512963826 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\loader.h
+1513033263 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\loader.h
 	<vector>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
@@ -1653,6 +1653,7 @@
 	"AttributeLocation.h"
 	<iostream>
 	<cstdio>
+	<stb_image.h>
 
 1512963826 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\glfw\glfw3.h
 	<stddef.h>
@@ -1709,7 +1710,7 @@
 1512963827 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\input\mouse.cpp
 	"Mouse.h"
 
-1512965507 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
+1513036783 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -2179,10 +2180,10 @@
 1512963827 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\shaders\shaders.cpp
 	"Shaders.h"
 
-1512963827 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\objmodel.cpp
+1513036170 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\objmodel.cpp
 	"ObjModel.h"
 
-1512963826 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\objmodel.h
+1513036004 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\objmodel.h
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<tiny_obj_loader.h>
@@ -3492,8 +3493,27 @@
 	"matrices.h"
 	"Window.h"
 
-1512963827 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\projection.cpp
+1513027178 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\projection.cpp
 	"Projection.h"
 
-1512963938 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\objectid.h
+1513030051 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\objectid.h
+
+1511572168 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
+
+1511572168 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\stb_image.cpp
+	"stb_image.h"
 
