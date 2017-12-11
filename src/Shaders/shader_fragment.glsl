@@ -12,6 +12,10 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
+#define BUNNY 0
+#define CUBE 1
+uniform int object_id;
+
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec3 color;
 
@@ -53,12 +57,21 @@ void main()
     vec3 Ka; // Refletância ambiente
     float q; // Expoente especular para o modelo de iluminação de Phong
 
-        // PREENCHA AQUI
-        // Propriedades espectrais do coelho
-        Kd = vec3(0.08,0.4,0.8);
-        Ks = vec3(0.8,0.8,0.8);
-        Ka = Kd/2;
-        q = 32.0;
+    switch(object_id){
+        case BUNNY:
+            // Propriedades espectrais do coelho
+            Kd = vec3(0.08,0.4,0.8);
+            Ks = vec3(0.8,0.8,0.8);
+            Ka = Kd/2;
+            q = 32.0;
+            break;
+        case CUBE:
+            // Propriedades espectrais do cubo
+            Kd = vec3(0.8,0.4,0.08);
+            Ks = vec3(0.0,0.0,0.0);
+            Ka = Kd/2;
+            q = 1.0;
+    }
 
    // Espectro da fonte de iluminação
     vec3 I = vec3(1.0,1.0,1.0); // PREENCH AQUI o espectro da fonte de luz

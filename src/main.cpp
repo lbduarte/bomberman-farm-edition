@@ -45,14 +45,11 @@
 #include "LookAtCamera.h"
 #include "FreeCamera.h"
 #include "Projection.h"
+#include "ObjectId.h"
 
 // Screen Resolution
 #define WIDTH   800
 #define HEIGHT  600
-
-
-
-
 
 int main()
 {
@@ -64,6 +61,9 @@ int main()
     Graphics::Renderer renderer;
     Cameras::LookAt::init(0.0f, 0.0f, -2.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     Cameras::Free::init(0.0f, 0.0f, -2.5f, glm::vec4(0.0f, 0.0f, 2.5f, 1.0f), glm::vec4(0.0f, 0.0f, -2.5f, 0.0f));
+
+
+    GLint object_id_uniform       = glGetUniformLocation(Shaders::getProgramID(), "object_id");
 
     std::vector<GLfloat> model_coefficients = {
     // Vértices de um cubo
@@ -110,7 +110,11 @@ int main()
     obj.computeNormals();
     obj.buildTriangles();
     Graphics::RawModel model = loader.loadObjToVAO(obj);
+    glUniform1i(object_id_uniform, BUNNY);
+
 //    Graphics::RawModel model = loader.loadToVAO(model_coefficients, indices, color_coefficients);
+//    glUniform1i(object_id_uniform, CUBE);
+
 
     // System's GPU information
     const GLubyte *vendor      = glGetString(GL_VENDOR);

@@ -69,6 +69,7 @@
 		<Unit filename="include/LookAtCamera.h" />
 		<Unit filename="include/Mouse.h" />
 		<Unit filename="include/ObjModel.h" />
+		<Unit filename="include/ObjectId.h" />
 		<Unit filename="include/Projection.h" />
 		<Unit filename="include/RawModel.h" />
 		<Unit filename="include/Renderer.h" />
