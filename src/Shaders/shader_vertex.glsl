@@ -12,7 +12,7 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-#define BUNNY 0
+#define PLAN 0
 #define CUBE 1
 uniform int object_id;
 

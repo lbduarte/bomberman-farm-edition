@@ -3,7 +3,7 @@
 #define OBJECTID_H
 
 enum ObjectID {
-                BUNNY,
+                PLAN,
                 CUBE
             };
 

@@ -51,6 +51,8 @@
 #define WIDTH   800
 #define HEIGHT  600
 
+#define M_PI 3.1415
+
 int main()
 {
     Graphics::Window::create("Bomberman - Farm Edition", WIDTH, HEIGHT);
@@ -106,11 +108,11 @@ int main()
         0.0f, 0.5f, 1.0f, 1.0f, // cor do vértice 7
     };
 
-    Graphics::ObjModel obj("../../data/bunny.obj");
+    Graphics::ObjModel obj("../../data/plane.obj");
     obj.computeNormals();
     obj.buildTriangles();
     Graphics::RawModel model = loader.loadObjToVAO(obj);
-    glUniform1i(object_id_uniform, BUNNY);
+    glUniform1i(object_id_uniform, PLAN);
 
 //    Graphics::RawModel model = loader.loadToVAO(model_coefficients, indices, color_coefficients);
 //    glUniform1i(object_id_uniform, CUBE);
@@ -144,9 +146,22 @@ int main()
         Projection::computeProjectionMatrix();
         glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
         glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
-        modelMatrix = Matrix_Identity();
+
+        modelMatrix = Matrix_Translate(0,-2,-2)*Matrix_Scale(5,1,5);
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniform1i(object_id_uniform, PLAN);
         renderer.render(model);
+
+        modelMatrix = Matrix_Translate(5,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5);
+        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniform1i(object_id_uniform, PLAN);
+        renderer.render(model);
+
+        modelMatrix = Matrix_Translate(-5,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5);
+        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniform1i(object_id_uniform, PLAN);
+        renderer.render(model);
+
         Shaders::stop();
         Graphics::Window::updateScreen();
     }

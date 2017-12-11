@@ -12,7 +12,7 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-#define BUNNY 0
+#define PLAN 0
 #define CUBE 1
 uniform int object_id;
 
@@ -58,7 +58,7 @@ void main()
     float q; // Expoente especular para o modelo de iluminação de Phong
 
     switch(object_id){
-        case BUNNY:
+        case PLAN:
             // Propriedades espectrais do coelho
             Kd = vec3(0.08,0.4,0.8);
             Ks = vec3(0.8,0.8,0.8);
