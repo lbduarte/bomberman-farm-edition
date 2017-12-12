@@ -46,12 +46,51 @@ void VirtualScene::init(Loader loader)
 
     model = loader.loadToVAO(model_coefficients, indices);
     cube = model;
+
+    //Random positions
+    srand (time(NULL));
+
+    //Posições possíveis no mapa
+    int positions[96][2] = {{-5,-5}, {-5,-4}, {-5,-3}, {-5,-2}, {-5,-1}, {-5,0}, {-5,1}, {-5,2}, {-5,3}, {-5,4}, {-5,5},
+                {-4,-5}, {-4,-3}, {-4,-1}, {-4,1}, {-4,3}, {-4,5},
+                {-3,-5}, {-3,-4}, {-3,-3}, {-3,-2}, {-3,-1}, {-3,0}, {-3,1}, {-3,2}, {-3,3}, {-3,4}, {-3,5},
+                {-2,-5}, {-2,-3}, {-2,-1}, {-2,1}, {-2,3}, {-2,5},
+                {-1,-5}, {-1,-4}, {-1,-3}, {-1,-2}, {-1,-1}, {-1,0}, {-1,1}, {-1,2}, {-1,3}, {-1,4}, {-1,5},
+                {0,-5}, {0,-3}, {0,-1}, {0,1}, {0,3}, {0,5},
+                {1,-5}, {1,-4}, {1,-3}, {1,-2}, {1,-1}, {1,0}, {1,1}, {1,2}, {1,3}, {1,4}, {1,5},
+                {2,-5}, {2,-3}, {2,-1}, {2,1}, {2,3}, {2,5},
+                {3,-5}, {3,-4}, {3,-3}, {3,-2}, {3,-1}, {3,0}, {3,1}, {3,2}, {3,3},
+                {4,-5}, {4,-3}, {4,-1}, {4,1}, {4,3},
+                {5,-5}, {5,-4}, {5,-3}, {5,-2}, {5,-1}, {5,0}, {5,1}, {5,2}, {5,3}, {5,4}};
+
+    // Posição da vaca
+    int num_positions = sizeof(positions)/sizeof(positions[0]);
+    int index = rand() % num_positions;
+    cow_position[0] = positions[index][0];
+    cow_position[1] = positions[index][1];
+    for(int i=index;i<num_positions-1;i++){
+        positions[i][0]=positions[i+1][0];
+        positions[i][1]=positions[i+1][1];
+    }
+
+    //Posição dos cubos de palha
+    for(int i = 0; i<num_cubes; i++){
+        int num_positions = sizeof(positions)/sizeof(positions[0]);
+        int index = rand() % num_positions; // escolhe posição aleatória
+        random_positions[i][0] = positions[index][0];
+        random_positions[i][1] = positions[index][1];
+        for(int j=index;j<num_positions-1;j++){ //remove posição para os próximos sorteios
+            positions[j][0]=positions[j+1][0];
+            positions[j][1]=positions[j+1][1];
+        }
+    }
 }
 
 void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
 {
     drawPlans(model_uniform, object_id_uniform, renderer);
     drawWoodCubes(model_uniform, object_id_uniform, renderer);
+    drawHayCubes(model_uniform, object_id_uniform, renderer);
 }
 
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
@@ -140,3 +179,23 @@ void VirtualScene::drawWoodCubes(GLint model_uniform, GLint object_id_uniform, R
     }
 }
 
+void VirtualScene::drawHayCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
+{
+    glm::mat4 modelMatrix;
+
+    glm::vec4 box_min = glm::vec4(-0.5f,-0.5f,-0.5f,1.0f);
+    glm::vec4 box_max = glm::vec4(0.5f,0.5f,0.5f,1.0f);
+
+    int posx;
+    int posz;
+    for(int i=0;i<num_cubes;i++){
+            posz = random_positions[i][0];
+            posx = random_positions[i][1];
+            modelMatrix = Matrix_Translate((0+posx),-1.5,(-2+posz));
+            cubes_positions[5+posz][5+posx][0] = modelMatrix*box_min;
+            cubes_positions[5+posz][5+posx][1] = modelMatrix*box_max;
+            glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+            glUniform1i(object_id_uniform, HAYCUBE);
+            renderer.render(cube);
+    }
+}

@@ -1750,7 +1750,7 @@
 1513039219 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\input\mouse.cpp
 	"Mouse.h"
 
-1513106677 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
+1513111931 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -4824,14 +4824,15 @@
 	"Projection.h"
 	"ObjectId.h"
 
-1513105071 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\virtualscene.cpp
+1513111803 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\virtualscene.cpp
 	"VirtualScene.h"
 
-1513049645 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\virtualscene.h
+1513111845 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\virtualscene.h
 	<glm/mat4x4.hpp>
 	<glm/vec4.hpp>
 	<glm/gtc/type_ptr.hpp>
 	<vector>
+	<time.h>
 	"matrices.h"
 	"RawModel.h"
 	"Renderer.h"

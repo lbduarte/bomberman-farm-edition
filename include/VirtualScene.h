@@ -5,6 +5,7 @@
 #include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
+#include <time.h>
 #include "matrices.h"
 #include "RawModel.h"
 #include "Renderer.h"
@@ -12,6 +13,7 @@
 #include "Loader.h"
 #include "ObjectId.h"
 
+#define NUM_CUBES 55
 namespace Graphics
 {
     namespace VirtualScene
@@ -23,10 +25,15 @@ namespace Graphics
             static std::vector<glm::mat4> wall_models;
             static glm::vec4 cubes_positions[11][11][2];
 
+            static int num_cubes = NUM_CUBES;
+            static int random_positions[NUM_CUBES][2];
+            static int cow_position[2];
+
             void init(Loader loader);
             void drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
             void drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
             void drawWoodCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
+            void drawHayCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
     }
 }
 
