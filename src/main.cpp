@@ -46,6 +46,7 @@
 #include "FreeCamera.h"
 #include "Projection.h"
 #include "ObjectId.h"
+#include "VirtualScene.h"
 
 // Screen Resolution
 #define WIDTH   800
@@ -64,15 +65,7 @@ int main()
     Cameras::LookAt::init(0.0f, 0.0f, -2.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     Cameras::Free::init(0.0f, 0.0f, -2.5f, glm::vec4(0.0f, 0.0f, 2.5f, 1.0f), glm::vec4(0.0f, 0.0f, -2.5f, 0.0f));
 
-
-    Graphics::ObjModel obj("../../data/plane.obj");
-    obj.computeNormals();
-    obj.buildTriangles();
-    Graphics::RawModel model = loader.loadObjToVAO(obj);
-
-//    Graphics::RawModel model = loader.loadToVAO(model_coefficients, indices, color_coefficients);
-//    glUniform1i(object_id_uniform, CUBE);
-
+    Graphics::VirtualScene::init(loader);
 
     // System's GPU information
     const GLubyte *vendor      = glGetString(GL_VENDOR);
@@ -116,35 +109,7 @@ int main()
         glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
         glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
 
-        //direita
-        modelMatrix = Matrix_Translate(10,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,10);
-        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        glUniform1i(object_id_uniform, WALL);
-        renderer.render(model);
-
-        //esquerda
-        modelMatrix = Matrix_Translate(-10,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,10);
-        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        glUniform1i(object_id_uniform, WALL);
-        renderer.render(model);
-
-        //chão
-        modelMatrix = Matrix_Translate(0,-2,-2)*Matrix_Scale(10,1,10);
-        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        glUniform1i(object_id_uniform, FLOOR);
-        renderer.render(model);
-
-        //fundo
-        modelMatrix = Matrix_Translate(0,-1,-12)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,10);
-        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        glUniform1i(object_id_uniform, WALL);
-        renderer.render(model);
-
-//        //frente
-//        modelMatrix = Matrix_Translate(0,-1,8)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,10);
-//        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-//        glUniform1i(object_id_uniform, PLAN);
-//        renderer.render(model);
+        Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer);
 
         Shaders::stop();
         Graphics::Window::updateScreen();

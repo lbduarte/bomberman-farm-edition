@@ -14,13 +14,11 @@ Loader::~Loader()
 
 }
 
-RawModel Loader::loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices, std::vector<GLfloat> color_coefficients)
+RawModel Loader::loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices)
 {
-
     GLuint vaoID = createVAO();
     bindIndicesBuffer(indices);
     storeDataInAttributeList(POSITION, 4, model_coefficients);
-    storeDataInAttributeList(COLOR, 4, color_coefficients);
     unbindVAO();
     RawModel model(vaoID, indices.size());
     return model;

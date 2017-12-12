@@ -23,7 +23,7 @@ namespace Graphics
         public:
             Loader();
             ~Loader();
-            RawModel loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices, std::vector<GLfloat> color_coefficients);
+            RawModel loadToVAO(std::vector<GLfloat> model_coefficients, std::vector<GLuint> indices);
             RawModel loadObjToVAO(ObjModel object);
             void cleanUp();
             void loadTextureImage(const char* filename);
