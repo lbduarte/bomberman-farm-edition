@@ -19,7 +19,7 @@ namespace Graphics
         private:
             std::vector<GLuint> vaos;
             std::vector<GLuint> vbos;
-            int g_NumLoadedTextures = 0;
+            int g_NumLoadedTextures;
         public:
             Loader();
             ~Loader();
@@ -27,6 +27,7 @@ namespace Graphics
             RawModel loadObjToVAO(ObjModel object);
             void cleanUp();
             void loadTextureImage(const char* filename);
+            int getNumTextures();
 
         private:
             GLuint createVAO();

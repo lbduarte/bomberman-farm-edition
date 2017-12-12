@@ -24,16 +24,16 @@ uniform mat4 projection;
 
 uniform int object_id;
 
-// Parâmetros da axis-aligned bounding box (AABB) do modelo
-uniform vec4 bbox_min;
-uniform vec4 bbox_max;
-
 // Variáveis para acesso das imagens de textura
 uniform sampler2D Grass;
 uniform sampler2D Fence;
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec3 color;
+
+// Constantes
+#define M_PI   3.14159265358979323846
+#define M_PI_2 1.57079632679489661923
 
 void main()
 {
@@ -54,64 +54,39 @@ void main()
     vec4 n = normalize(normal);
 
     // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
-    vec4 l = normalize(vec4(0.0,2.0,1.0,0.0));
-    vec4 ponto_l = vec4(0.0,2.0,1.0,1.0);
+    vec4 l = normalize(vec4(1.0,1.0,0.0,0.0));
 
     // Vetor que define o sentido da câmera em relação ao ponto atual.
-    vec4 dir_v = normalize(vec4(0.0,-1.0,0.0,0.0));
-    vec4 v = normalize(camera_position-p);
-
+    vec4 v = normalize(camera_position - p);
 
     // Coordenadas de textura U e V
     float U = 0.0;
     float V = 0.0;
 
-    float cos_alfa = sqrt(3)/2;
-
-    // Vetor que define o sentido da reflexão especular ideal.
-    vec4 r = -l + 2 * n * (dot(n,l)); // PREENCHA AQUI o vetor de reflexão especular ideal
-
-    // Parâmetros que definem as propriedades espectrais da superfície
-    vec3 Kd; // Refletância difusa
-    vec3 Ks; // Refletância especular
-    vec3 Ka; // Refletância ambiente
-    float q; // Expoente especular para o modelo de iluminação de Phong
-
     vec3 Kd0;
 
-    // Equação de Iluminação
-    float lambert;
-    switch(object_id){
-        case WALL:
-            U = texcoords.x;
-            V = texcoords.y;
+    if(object_id == WALL){
+        U = texcoords.x;
+        V = texcoords.y;
 
-            // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
-            Kd0 = texture(Fence, vec2(U,V)).rgb;
-
-            // Equação de Iluminação
-            lambert = max(0,dot(n,l));
-
-            color = Kd0 * (lambert + 0.01);
-            break;
-
-        case FLOOR:
-            U = texcoords.x;
-            V = texcoords.y;
-
-            // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
-            Kd0 = texture(Grass, vec2(U,V)).rgb;
-
-            // Equação de Iluminação
-            lambert = max(0,dot(n,l));
-
-            color = Kd0 * (lambert + 0.01);
-
-            break;
-
-        case CUBE:
-            break;
+        // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
+        Kd0 = texture(Fence, vec2(U,V)).rgb;
     }
+    else if(object_id == FLOOR){
+        U = texcoords.x;
+        V = texcoords.y;
+
+        // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
+        Kd0 = texture(Grass, vec2(U,V)).rgb;
+    }
+    else if(object_id == CUBE){
+
+    }
+
+    // Equação de Iluminação
+    float lambert = max(0,dot(n,l));
+
+    color = Kd0 * (lambert + 0.01);
     // Cor final com correção gamma, considerando monitor sRGB.
     // Veja https://en.wikipedia.org/w/index.php?title=Gamma_correction&oldid=751281772#Windows.2C_Mac.2C_sRGB_and_TV.2Fvideo_standard_gammas
     color = pow(color, vec3(1.0,1.0,1.0)/2.2);

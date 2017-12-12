@@ -5,6 +5,7 @@ using namespace Graphics;
 
 Loader::Loader()
 {
+    this->g_NumLoadedTextures = 0;
 
 }
 
@@ -138,4 +139,9 @@ void Loader::loadTextureImage(const char* filename)
     stbi_image_free(data);
 
     this->g_NumLoadedTextures += 1;
+}
+
+int Loader::getNumTextures()
+{
+    return this->g_NumLoadedTextures;
 }
