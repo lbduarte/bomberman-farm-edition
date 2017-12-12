@@ -21,8 +21,7 @@ namespace Graphics
             static RawModel cube(0, 0);
 
             static std::vector<glm::mat4> wall_models;
-            static std::vector<glm::mat4> hay_cube_models;
-            static std::vector<glm::mat4> wood_cube_models;
+            static glm::vec4 cubes_positions[11][11][2];
 
             void init(Loader loader);
             void drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
