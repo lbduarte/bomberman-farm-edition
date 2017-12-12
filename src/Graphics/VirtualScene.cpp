@@ -106,8 +106,8 @@ void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Ren
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
 {
         glm::mat4 modelMatrix;
-        glm::vec4 plan_min = glm::vec4(-1.0f,-1.0f,-1.0f,1.0f);
-        glm::vec4 plan_max = glm::vec4(1.0f,1.0f,1.0f,1.0f);
+        glm::vec4 plan_min = glm::vec4(-1.0f,0.0f,-1.0f,1.0f);
+        glm::vec4 plan_max = glm::vec4(1.0f,0.0f,1.0f,1.0f);
         //direita
         modelMatrix = Matrix_Translate(5.5,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5);
         wall_positions[0][0] = modelMatrix*plan_min;
