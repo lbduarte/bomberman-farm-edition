@@ -20,13 +20,16 @@ uniform mat4 projection;
 
 #define FLOOR 0
 #define WALL 1
-#define CUBE 2
+#define HAYCUBE 2
+#define WOODCUBE 3
 
 uniform int object_id;
 
 // Variáveis para acesso das imagens de textura
 uniform sampler2D Grass;
 uniform sampler2D Fence;
+uniform sampler2D HayCube;
+uniform sampler2D WoodCube;
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec3 color;
@@ -54,7 +57,7 @@ void main()
     vec4 n = normalize(normal);
 
     // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
-    vec4 l = normalize(vec4(1.0,1.0,0.0,0.0));
+    vec4 l = normalize(vec4(1.0,1.0,1.0,0.0));
 
     // Vetor que define o sentido da câmera em relação ao ponto atual.
     vec4 v = normalize(camera_position - p);
@@ -79,12 +82,77 @@ void main()
         // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
         Kd0 = texture(Grass, vec2(U,V)).rgb;
     }
-    else if(object_id == CUBE){
+    else if(object_id == WOODCUBE){
+        float minx = -0.5;
+        float maxx = 0.5;
+
+        float miny = -0.5;
+        float maxy = 0.5;
+
+        float minz = -0.5;
+        float maxz = 0.5;
+
+        float largura = maxx-minx;
+        float altura = maxy-miny;
+
+        if(position_model.z==0.5 || position_model.z==-0.5)
+        {
+            U = (position_model.x-minx)/largura;
+            V = (position_model.y-miny)/altura;
+        }
+        else if(position_model.x==0.5 || position_model.x==-0.5)
+        {
+            U = (position_model.z-minx)/largura;
+            V = (position_model.y-miny)/altura;
+        }
+        else if(position_model.y==0.5 || position_model.y==-0.5)
+        {
+            U = (position_model.x-minx)/largura;
+            V = (position_model.z-miny)/altura;
+        }
+
+        // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
+        Kd0 = texture(WoodCube, vec2(U,V)).rgb;
+
+    }
+    else if(object_id == HAYCUBE){
+        float minx = -0.5;
+        float maxx = 0.5;
+
+        float miny = -0.5;
+        float maxy = 0.5;
+
+        float minz = -0.5;
+        float maxz = 0.5;
+
+        float largura = maxx-minx;
+        float altura = maxy-miny;
+
+
+        if(position_model.z==0.5 || position_model.z==-0.5)
+        {
+            U = (position_model.x-minx)/largura;
+            V = (position_model.y-miny)/altura;
+        }
+        else if(position_model.x==0.5 || position_model.x==-0.5)
+        {
+            U = (position_model.z-minx)/largura;
+            V = (position_model.y-miny)/altura;
+        }
+        else if(position_model.y==0.5 || position_model.y==-0.5)
+        {
+            U = (position_model.x-minx)/largura;
+            V = (position_model.z-miny)/altura;
+        }
+
+        // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
+        Kd0 = texture(HayCube, vec2(U,V)).rgb;
 
     }
 
     // Equação de Iluminação
-    float lambert = max(0,dot(n,l));
+    // float lambert = max(0,dot(n,l));
+    float lambert = 1;
 
     color = Kd0 * (lambert + 0.01);
     // Cor final com correção gamma, considerando monitor sRGB.

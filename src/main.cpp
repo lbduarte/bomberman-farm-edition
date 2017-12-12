@@ -87,11 +87,14 @@ int main()
     glUseProgram(Shaders::getProgramID());
     glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "Grass"), 0);
     glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "Fence"), 1);
-    //glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "TextureImage2"), 2);
+    glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "HayCube"), 2);
+    glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "WoodCube"), 3);
     glUseProgram(0);
 
     loader.loadTextureImage("../../data/grass.jpeg"); //Grass
     loader.loadTextureImage("../../data/fence.jpeg"); //Fence
+    loader.loadTextureImage("../../data/hay_cube.jpg"); //HayCube
+    loader.loadTextureImage("../../data/wood_cube.jpg"); //WoodCube
 
     glm::mat4 modelMatrix;
 
