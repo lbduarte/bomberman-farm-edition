@@ -7,13 +7,17 @@ using namespace VirtualScene;
 
 void VirtualScene::init(Loader loader)
 {
-
-    //Create plan
-    ObjModel obj("../../data/plane.obj");
+    //Create cow
+    ObjModel obj("../../data/cow.obj");
     obj.computeNormals();
     obj.buildTriangles();
-    RawModel model(loader.loadObjToVAO(obj));
-    plan = model;
+    cow = loader.loadObjToVAO(obj);
+
+    //Create plan
+    ObjModel obj2("../../data/plane.obj");
+    obj2.computeNormals();
+    obj2.buildTriangles();
+    plan = loader.loadObjToVAO(obj2);
 
     //Create cube
     std::vector<GLfloat> model_coefficients = {
@@ -44,8 +48,7 @@ void VirtualScene::init(Loader loader)
         1, 6, 2, // triângulo 12
     };
 
-    model = loader.loadToVAO(model_coefficients, indices);
-    cube = model;
+    cube = loader.loadToVAO(model_coefficients, indices);
 
     //Random positions
     srand (time(NULL));
@@ -64,7 +67,7 @@ void VirtualScene::init(Loader loader)
                 {5,-5}, {5,-4}, {5,-3}, {5,-2}, {5,-1}, {5,0}, {5,1}, {5,2}, {5,3}, {5,4}};
 
     // Posição da vaca
-    int num_positions = sizeof(positions)/sizeof(positions[0]);
+    int num_positions = 96;
     int index = rand() % num_positions;
     cow_position[0] = positions[index][0];
     cow_position[1] = positions[index][1];
@@ -72,10 +75,10 @@ void VirtualScene::init(Loader loader)
         positions[i][0]=positions[i+1][0];
         positions[i][1]=positions[i+1][1];
     }
+    num_positions--;
 
     //Posição dos cubos de palha
     for(int i = 0; i<num_cubes; i++){
-        int num_positions = sizeof(positions)/sizeof(positions[0]);
         int index = rand() % num_positions; // escolhe posição aleatória
         random_positions[i][0] = positions[index][0];
         random_positions[i][1] = positions[index][1];
@@ -83,6 +86,7 @@ void VirtualScene::init(Loader loader)
             positions[j][0]=positions[j+1][0];
             positions[j][1]=positions[j+1][1];
         }
+        num_positions--;
     }
 }
 
@@ -91,6 +95,11 @@ void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Ren
     drawPlans(model_uniform, object_id_uniform, renderer);
     drawWoodCubes(model_uniform, object_id_uniform, renderer);
     drawHayCubes(model_uniform, object_id_uniform, renderer);
+    //desenha vaca
+    glm::mat4 modelMatrix = Matrix_Translate((0+cow_position[1]),-1.65,(-2+cow_position[0]))*Matrix_Scale(0.5,0.5,0.5);
+    glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniform1i(object_id_uniform, COW);
+    renderer.render(cow);
 }
 
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)

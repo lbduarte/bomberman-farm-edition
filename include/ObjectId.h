@@ -6,7 +6,8 @@ enum ObjectID {
                 FLOOR,
                 WALL,
                 HAYCUBE,
-                WOODCUBE
+                WOODCUBE,
+                COW
             };
 
 #endif // OBJECTID_H

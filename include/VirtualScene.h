@@ -21,6 +21,7 @@ namespace Graphics
 
             static RawModel plan(0, 0);
             static RawModel cube(0, 0);
+            static RawModel cow(0, 0);
 
             static std::vector<glm::mat4> wall_models;
             static glm::vec4 cubes_positions[11][11][2];
