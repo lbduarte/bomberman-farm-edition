@@ -66,3 +66,4 @@ void Mouse::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
     Cameras::LookAt::updateDistance(yoffset);
 }
+

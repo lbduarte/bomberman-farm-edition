@@ -20,6 +20,8 @@ namespace Input
         static double lastCursorX;
         static double lastCursorY;
 
+        static bool updateFree;
+
         void init();
         bool isMouseButtonPressed(int buttonCode);
         void getCursorPosition(double &x, double &y);

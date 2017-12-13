@@ -12,6 +12,7 @@
 #include "ObjModel.h"
 #include "Loader.h"
 #include "ObjectId.h"
+#include "Keyboard.h"
 
 #define NUM_CUBES 55
 namespace Graphics
@@ -29,6 +30,7 @@ namespace Graphics
             static int num_cubes = NUM_CUBES;
             static int random_positions[NUM_CUBES][2];
             static int cow_position[2];
+            static float cow_angleY;
 
             void init(Loader loader);
             void drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer, bool drawCow);

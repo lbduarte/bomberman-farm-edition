@@ -1738,7 +1738,7 @@
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 
-1512963826 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\mouse.h
+1513130321 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\mouse.h
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	"FreeCamera.h"
@@ -1747,10 +1747,10 @@
 1512963827 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\input\keyboard.cpp
 	"Keyboard.h"
 
-1513128377 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\input\mouse.cpp
+1513130306 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\input\mouse.cpp
 	"Mouse.h"
 
-1513128526 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
+1513129818 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -3524,7 +3524,7 @@
 	<glm/gtc/type_ptr.hpp>
 	"matrices.h"
 
-1513128587 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\lookatcamera.cpp
+1513128797 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\lookatcamera.cpp
 	"LookAtCamera.h"
 
 1512963826 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\projection.h
@@ -4824,10 +4824,10 @@
 	"Projection.h"
 	"ObjectId.h"
 
-1513126069 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\virtualscene.cpp
+1513129900 source:c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\src\graphics\virtualscene.cpp
 	"VirtualScene.h"
 
-1513117213 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\virtualscene.h
+1513129754 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\virtualscene.h
 	<glm/mat4x4.hpp>
 	<glm/vec4.hpp>
 	<glm/gtc/type_ptr.hpp>
@@ -4839,6 +4839,7 @@
 	"ObjModel.h"
 	"Loader.h"
 	"ObjectId.h"
+	"Keyboard.h"
 
 1513125218 c:\coisas\ufrgs\fcg\trabalho_final\bomberman-farm-edition\include\textrendering.h
 	<string>

@@ -12,6 +12,7 @@ void VirtualScene::init(Loader loader)
     obj.computeNormals();
     obj.buildTriangles();
     cow = loader.loadObjToVAO(obj);
+    cow_angleY = 0;
 
     //Create plan
     ObjModel obj2("../../data/plane.obj");
@@ -99,8 +100,17 @@ void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Ren
 
     if(drawCow)
     {
+        float delta = 3.141592 / 32;
+        if (Input::Keyboard::isKeyPressed(GLFW_KEY_RIGHT))
+        {
+            cow_angleY += delta;
+        }
+        else if (Input::Keyboard::isKeyPressed(GLFW_KEY_LEFT))
+        {
+            cow_angleY -= delta;
+        }
         //desenha vaca
-        glm::mat4 modelMatrix = Matrix_Translate((0+cow_position[1]),-1.65,(-2+cow_position[0]))*Matrix_Scale(0.5,0.5,0.5);
+        glm::mat4 modelMatrix = Matrix_Translate((0+cow_position[1]),-1.65,(-2+cow_position[0]))*Matrix_Rotate_Y(cow_angleY)*Matrix_Scale(0.5,0.5,0.5);
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         glUniform1i(object_id_uniform, COW);
         renderer.render(cow);
