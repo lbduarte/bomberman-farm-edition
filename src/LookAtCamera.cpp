@@ -3,24 +3,26 @@
 using namespace Cameras;
 using namespace LookAt;
 
-void LookAt::init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point)
+void LookAt::init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point, glm::vec4 camera_position_c)
 {
     theta = a_theta;
     phi = a_phi;
     distance = a_distance;
     lookAt_L = lookat_point;
+    position_C = camera_position_c;
     upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+    viewVector = lookAt_L - position_C;
 }
 
 void LookAt::computePosition()
 {
+
     r = distance;
     y = r * sin(phi);
     z = r * cos(phi) * cos(theta);
     x = r * cos(phi) * sin(theta);
     position_C = glm::vec4(x, y, z, 1.0f);
     viewVector = lookAt_L - position_C;
-
 }
 
 void LookAt::computeViewMatrix()

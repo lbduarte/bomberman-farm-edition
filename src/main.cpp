@@ -71,7 +71,7 @@ int main()
 
     Graphics::Loader loader;
     Graphics::Renderer renderer;
-    Cameras::LookAt::init(0.0f, 0.0f, -2.5f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    Cameras::LookAt::init(0.0f, 0.0f, -10.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),glm::vec4(0.0f, 10.0f, 10.0f, 0.0f));
     Cameras::Free::init(0.0f, 0.0f, -2.5f, glm::vec4(5.0f, -1.5f, 3.0f, 1.0f), glm::vec4(0.0f, 0.0f, -2.5f, 0.0f));
     //Cameras::Free::init(0.0f, 0.0f, -2.5f, glm::vec4(0.0f, 0.0f, 2.5f, 1.0f), glm::vec4(0.0f, 0.0f, -2.5f, 0.0f));
 
@@ -117,33 +117,56 @@ int main()
     int time = (int)glfwGetTime();
 
     int bombs = BOMBS;
+    bool start = false;
 
     while (!Graphics::Window::shouldClose())
     {
         renderer.prepare();
         Shaders::start();
-        Cameras::Free::computePosition();
-        Cameras::Free::computeViewMatrix();
-        Projection::init();
-        Projection::computeProjectionMatrix();
-        glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
-        glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
-        Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer);
-
-
-        if(time != (int)glfwGetTime())
+        if(!start)
         {
-            time =(int)glfwGetTime();
-            seconds--;
+            Cameras::LookAt::computePosition();
+            Cameras::LookAt::computeViewMatrix();
+            Projection::init();
+            Projection::computeProjectionMatrix();
+            glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::LookAt::getViewMatrix()));
+            glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
+            Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer, false);
+
+            char buffer[25] = "press ENTER to start";
+            int numchars=25;
+            float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+            float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+            TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+
+            if (Input::Keyboard::isKeyPressed(GLFW_KEY_ENTER))
+                start = true;
         }
+        else
+        {
+            Cameras::Free::computePosition();
+            Cameras::Free::computeViewMatrix();
+            Projection::init();
+            Projection::computeProjectionMatrix();
+            glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
+            glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
+            Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer, false);
 
-        char buffer[25];
-        int numchars=25;
-        sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
-        float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
-        float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
-        TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+            if(time != (int)glfwGetTime())
+            {
+                time =(int)glfwGetTime();
+                seconds--;
+            }
 
+            //Print # of bombs and # of remaining secs
+            char buffer[25];
+            int numchars=25;
+            sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
+            float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+            float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+            TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+
+        }
         Shaders::stop();
         Graphics::Window::updateScreen();
     }

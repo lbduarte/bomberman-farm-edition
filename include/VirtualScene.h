@@ -31,7 +31,7 @@ namespace Graphics
             static int cow_position[2];
 
             void init(Loader loader);
-            void drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
+            void drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer, bool drawCow);
             void drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
             void drawWoodCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
             void drawHayCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer);

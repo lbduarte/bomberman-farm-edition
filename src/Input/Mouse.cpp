@@ -58,7 +58,6 @@ void Mouse::cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
     Cameras::Free::updateTheta(dx);
     Cameras::Free::updatePhi(dy);
 
-
     lastCursorX = xpos;
     lastCursorY = ypos;
 }

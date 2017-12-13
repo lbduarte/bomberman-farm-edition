@@ -24,7 +24,7 @@ namespace Cameras
             static glm::mat4 viewMatrix;
 
 
-            void init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point);
+            void init(float a_theta, float a_phi, float a_distance, glm::vec4 lookat_point, glm::vec4 camera_position_c);
             void computePosition();
             void computeViewMatrix();
 

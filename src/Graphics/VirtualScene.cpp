@@ -91,16 +91,20 @@ void VirtualScene::init(Loader loader)
     }
 }
 
-void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
+void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Renderer renderer, bool drawCow)
 {
     drawPlans(model_uniform, object_id_uniform, renderer);
     drawWoodCubes(model_uniform, object_id_uniform, renderer);
     drawHayCubes(model_uniform, object_id_uniform, renderer);
-    //desenha vaca
-    glm::mat4 modelMatrix = Matrix_Translate((0+cow_position[1]),-1.65,(-2+cow_position[0]))*Matrix_Scale(0.5,0.5,0.5);
-    glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-    glUniform1i(object_id_uniform, COW);
-    renderer.render(cow);
+
+    if(drawCow)
+    {
+        //desenha vaca
+        glm::mat4 modelMatrix = Matrix_Translate((0+cow_position[1]),-1.65,(-2+cow_position[0]))*Matrix_Scale(0.5,0.5,0.5);
+        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniform1i(object_id_uniform, COW);
+        renderer.render(cow);
+    }
 }
 
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
