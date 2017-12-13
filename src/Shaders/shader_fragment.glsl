@@ -23,6 +23,7 @@ uniform mat4 projection;
 #define HAYCUBE 2
 #define WOODCUBE 3
 #define COW 4
+#define BOMB 5
 
 uniform int object_id;
 
@@ -31,6 +32,9 @@ uniform sampler2D Grass;
 uniform sampler2D Fence;
 uniform sampler2D HayCube;
 uniform sampler2D WoodCube;
+uniform sampler2D BombDifuse;
+uniform sampler2D BombNormal;
+uniform sampler2D BombSpecular;
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec3 color;
@@ -71,8 +75,10 @@ void main()
     float V = 0.0;
 
     vec3 Kd0;
+    vec3 Ks0;
 
-    if(object_id == WALL){
+    if(object_id == WALL)
+    {
         U = texcoords.x;
         V = texcoords.y;
 
@@ -84,7 +90,8 @@ void main()
         float lambert = 1;
         color = Kd0 * (lambert + 0.01);
     }
-    else if(object_id == FLOOR){
+    else if(object_id == FLOOR)
+    {
         U = texcoords.x;
         V = texcoords.y;
 
@@ -198,6 +205,26 @@ void main()
         vec3 phong_specular_term  = Ks * I * pow(max(0.0,dot(r,v)), q);
 
         color = lambert_diffuse_term + ambient_term + phong_specular_term;
+    }
+    else if(object_id == BOMB)
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+
+        // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
+        Kd0 = texture(BombDifuse, vec2(U,V)).rgb;
+
+        vec3 n_aux = texture(BombNormal, vec2(U,V)).rbg;
+        n = vec4(n_aux.x, n_aux.y, n_aux.z, 0.0f);
+
+        Ks0 = texture(BombSpecular, vec2(U,V)).rgb;
+        float q = 10.0;
+
+        // Equação de Iluminação
+        float lambert = max(0,dot(n,l));
+        float phong = pow(max(0.0,dot(r,v)), q);
+        color = (Kd0 * (lambert + 0.01)) + (Ks0 * (phong + 0.01));
+
     }
     // Cor final com correção gamma, considerando monitor sRGB.
     // Veja https://en.wikipedia.org/w/index.php?title=Gamma_correction&oldid=751281772#Windows.2C_Mac.2C_sRGB_and_TV.2Fvideo_standard_gammas

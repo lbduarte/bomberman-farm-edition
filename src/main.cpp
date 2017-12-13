@@ -71,7 +71,7 @@ int main()
 
     Graphics::Loader loader;
     Graphics::Renderer renderer;
-    Cameras::LookAt::init(0.0f, 3*(M_PI/4), 13.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+    Cameras::LookAt::init(0.0f, 3*(M_PI/4), 13.0f, glm::vec4(0.0f, -2.0f, -2.0f, 1.0f),glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
 
     Graphics::VirtualScene::init(loader);
 
@@ -97,12 +97,18 @@ int main()
     glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "Fence"), 1);
     glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "HayCube"), 2);
     glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "WoodCube"), 3);
+    glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "BombDifuse"), 4);
+    glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "BombNormal"), 5);
+    glUniform1i(glGetUniformLocation(Shaders::getProgramID(), "BombSpecular"), 6);
     glUseProgram(0);
 
     loader.loadTextureImage("../../data/grass.jpeg"); //Grass
     loader.loadTextureImage("../../data/fence.jpeg"); //Fence
     loader.loadTextureImage("../../data/hay_cube.jpg"); //HayCube
     loader.loadTextureImage("../../data/wood_cube.jpg"); //WoodCube
+    loader.loadTextureImage("../../data/bomb_difuse_map.jpg"); //WoodCube
+    loader.loadTextureImage("../../data/bomb_normal_map.jpg"); //BombNormal
+    loader.loadTextureImage("../../data/bomb_specular_map.jpg"); //BombSpecular
 
     glm::mat4 modelMatrix;
 

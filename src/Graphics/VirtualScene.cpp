@@ -20,6 +20,12 @@ void VirtualScene::init(Loader loader)
     obj2.buildTriangles();
     plan = loader.loadObjToVAO(obj2);
 
+    //Create bomb
+    ObjModel obj3("../../data/bomb.obj");
+    obj3.computeNormals();
+    obj3.buildTriangles();
+    bomb = loader.loadObjToVAO(obj3);
+
     //Create cube
     std::vector<GLfloat> model_coefficients = {
     // Vértices de um cubo
@@ -72,7 +78,7 @@ void VirtualScene::init(Loader loader)
     int index = rand() % num_positions;
     cow_position[0] = positions[index][0];
     cow_position[1] = positions[index][1];
-    printf("\ncow pz %d  px %d index %d\n", cow_position[0], cow_position[1], index);
+
     for(int i=index;i<num_positions-1;i++){
         positions[i][0]=positions[i+1][0];
         positions[i][1]=positions[i+1][1];
@@ -115,6 +121,11 @@ void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Ren
         glUniform1i(object_id_uniform, COW);
         renderer.render(cow);
     }
+//        //desenha bomba
+//        glm::mat4 modelMatrix =  Matrix_Translate(1,-1.82,-2)*Matrix_Rotate_Y(M_PI/4)*Matrix_Scale(0.02,0.02,0.02);
+//        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+//        glUniform1i(object_id_uniform, BOMB);
+//        renderer.render(bomb);
 }
 
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
@@ -123,7 +134,7 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
         glm::vec4 plan_min = glm::vec4(-1.0f,0.0f,-1.0f,1.0f);
         glm::vec4 plan_max = glm::vec4(1.0f,0.0f,1.0f,1.0f);
         //direita
-        modelMatrix = Matrix_Translate(5.5,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5);
+        modelMatrix = Matrix_Translate(5.5001,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
         wall_positions[0][0] = modelMatrix*plan_min;
         wall_positions[0][1] = modelMatrix*plan_max;
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
@@ -131,7 +142,7 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
         renderer.render(plan);
 
         //esquerda
-        modelMatrix = Matrix_Translate(-5.5,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5);
+        modelMatrix = Matrix_Translate(-5.5001,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
         wall_positions[1][0] = modelMatrix*plan_min;
         wall_positions[1][1] = modelMatrix*plan_max;
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
@@ -139,13 +150,13 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
         renderer.render(plan);
 
         //chão
-        modelMatrix = Matrix_Translate(0,-2,-2)*Matrix_Scale(5.5,1,5.5);
+        modelMatrix = Matrix_Translate(0,-2.001,-2)*Matrix_Scale(5.5001,1,5.5001);
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         glUniform1i(object_id_uniform, FLOOR);
         renderer.render(plan);
 
         //fundo
-        modelMatrix = Matrix_Translate(0,-1,-7.5)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5);
+        modelMatrix = Matrix_Translate(0,-1,-7.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
         wall_positions[1][0] = modelMatrix*plan_min;
         wall_positions[1][1] = modelMatrix*plan_max;
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
@@ -153,7 +164,7 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
         renderer.render(plan);
 
         //frente
-        modelMatrix = Matrix_Translate(0,-1,3.5)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5);
+        modelMatrix = Matrix_Translate(0,-1,3.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
         wall_positions[1][0] = modelMatrix*plan_min;
         wall_positions[1][1] = modelMatrix*plan_max;
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
