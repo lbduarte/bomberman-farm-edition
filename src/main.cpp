@@ -53,6 +53,15 @@
 #define HEIGHT  600
 
 #define M_PI 3.1415
+#define SECONDS 60
+#define BOMBS 20
+
+GLuint CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id); // Cria um programa de GPU
+
+void TextRendering_Init();
+float TextRendering_LineHeight(GLFWwindow* window);
+float TextRendering_CharWidth(GLFWwindow* window);
+void TextRendering_PrintString(GLFWwindow* window, const std::string &str, float x, float y, float scale = 1.0f);
 
 int main()
 {
@@ -99,11 +108,18 @@ int main()
 
     glm::mat4 modelMatrix;
 
+    // Inicializamos o código para renderização de texto.
+    TextRendering_Init();
+
     glEnable(GL_DEPTH_TEST);
+
+    int seconds = SECONDS;
+    int time = (int)glfwGetTime();
+
+    int bombs = BOMBS;
 
     while (!Graphics::Window::shouldClose())
     {
-
         renderer.prepare();
         Shaders::start();
         Cameras::Free::computePosition();
@@ -112,8 +128,21 @@ int main()
         Projection::computeProjectionMatrix();
         glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
         glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
-
         Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer);
+
+
+        if(time != (int)glfwGetTime())
+        {
+            time =(int)glfwGetTime();
+            seconds--;
+        }
+
+        char buffer[25];
+        int numchars=25;
+        sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
+        float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+        float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+        TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
 
         Shaders::stop();
         Graphics::Window::updateScreen();
@@ -124,3 +153,51 @@ int main()
     Graphics::Window::destroy();
 }
 
+GLuint CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id)
+{
+    // Criamos um identificador (ID) para este programa de GPU
+    GLuint program_id = glCreateProgram();
+
+    // Definição dos dois shaders GLSL que devem ser executados pelo programa
+    glAttachShader(program_id, vertex_shader_id);
+    glAttachShader(program_id, fragment_shader_id);
+
+    // Linkagem dos shaders acima ao programa
+    glLinkProgram(program_id);
+
+    // Verificamos se ocorreu algum erro durante a linkagem
+    GLint linked_ok = GL_FALSE;
+    glGetProgramiv(program_id, GL_LINK_STATUS, &linked_ok);
+
+    // Imprime no terminal qualquer erro de linkagem
+    if ( linked_ok == GL_FALSE )
+    {
+        GLint log_length = 0;
+        glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &log_length);
+
+        // Alocamos memória para guardar o log de compilação.
+        // A chamada "new" em C++ é equivalente ao "malloc()" do C.
+        GLchar* log = new GLchar[log_length];
+
+        glGetProgramInfoLog(program_id, log_length, &log_length, log);
+
+        std::string output;
+
+        output += "ERROR: OpenGL linking of program failed.\n";
+        output += "== Start of link log\n";
+        output += log;
+        output += "\n== End of link log\n";
+
+        // A chamada "delete" em C++ é equivalente ao "free()" do C
+        delete [] log;
+
+        fprintf(stderr, "%s", output.c_str());
+    }
+
+    // Os "Shader Objects" podem ser marcados para deleção após serem linkados
+    glDeleteShader(vertex_shader_id);
+    glDeleteShader(fragment_shader_id);
+
+    // Retornamos o ID gerado acima
+    return program_id;
+}

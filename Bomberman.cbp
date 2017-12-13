@@ -98,6 +98,7 @@
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/matrices.cpp" />
 		<Unit filename="src/stb_image.cpp" />
+		<Unit filename="src/textrendering.cpp" />
 		<Unit filename="src/tiny_obj_loader.cpp" />
 		<Extensions>
 			<code_completion />

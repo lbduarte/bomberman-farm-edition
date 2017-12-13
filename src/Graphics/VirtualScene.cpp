@@ -67,11 +67,11 @@ void VirtualScene::init(Loader loader)
                 {5,-5}, {5,-4}, {5,-3}, {5,-2}, {5,-1}, {5,0}, {5,1}, {5,2}, {5,3}, {5,4}};
 
     // Posição da vaca
-    int num_positions = 96;
+    int num_positions = sizeof(positions)/sizeof(positions[0]);
     int index = rand() % num_positions;
     cow_position[0] = positions[index][0];
     cow_position[1] = positions[index][1];
-    printf("\ncow pz %d  px %d\n", cow_position[0], cow_position[1]);
+    printf("\ncow pz %d  px %d index %d\n", cow_position[0], cow_position[1], index);
     for(int i=index;i<num_positions-1;i++){
         positions[i][0]=positions[i+1][0];
         positions[i][1]=positions[i+1][1];

@@ -29,6 +29,7 @@ namespace Graphics
         int getHeight();
         float getScreenRatio();
         const char* getTitle();
+        GLFWwindow* getWindow();
 
         // Window Callbacks
         void frameBufferSizeCallback(GLFWwindow* p_window, int p_width, int p_height);

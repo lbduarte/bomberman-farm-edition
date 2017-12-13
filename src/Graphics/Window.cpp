@@ -107,7 +107,9 @@ void Window::updateScreen()
     glfwSwapBuffers(window);
 }
 
-
+GLFWwindow* Window::getWindow(){
+    return window;
+}
 
 
 
