@@ -11,27 +11,35 @@ void Free::init(float a_theta, float a_phi, float a_distance, glm::vec4 camera_p
     viewVector = camera_view_vector;
     position_C = camera_position_c;
     upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+    bottomNearLeft = glm::vec4(position_C.x - 0.25f, position_C.y - 0.25f, position_C.z + 0.25f, 0.0f);
+    topFarRight = glm::vec4(position_C.x + 0.25f, position_C.y + 0.25f, position_C.z - 0.25f, 0.0f);
+    movementVector = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void Free::computePosition()
+void Free::updateCamera()
 {
     r = distance;
     y = r * sin(phi);
     z = r * cos(phi) * cos(theta);
     x = r * cos(phi) * sin(theta);
     incVector = 0.03f * viewVector;
+    incVector.y = 0;
+
+    movementVector = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_D))
-        position_C -= crossproduct(upVector, incVector);
+        movementVector -= crossproduct(upVector, incVector);
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_A))
-        position_C += crossproduct(upVector, incVector);
+        movementVector += crossproduct(upVector, incVector);
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_W))
-        position_C += incVector;
+        movementVector += incVector;
 
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_S))
-        position_C -= incVector;
+        movementVector -= incVector;
+
+    position_C += movementVector * Graphics::VirtualScene::checkCollision(position_C, position_C + movementVector, bottomNearLeft, topFarRight);
 
     viewVector = glm::vec4(x, y, z, 0.0f);
 }
@@ -87,3 +95,19 @@ void Free::updateDistance(double yoffset)
     if (distance < 0.0f)
         distance = 0.0f;
 }
+
+glm::vec4 Free::getPosition()
+{
+    return position_C;
+}
+
+glm::vec4 Free::getIncVector()
+{
+    return incVector;
+}
+
+glm::vec4 Free::getUpVector()
+{
+    return upVector;
+}
+

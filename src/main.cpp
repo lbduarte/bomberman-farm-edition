@@ -48,6 +48,7 @@
 #include "ObjectId.h"
 #include "VirtualScene.h"
 
+
 // Screen Resolution
 #define WIDTH   800
 #define HEIGHT  600
@@ -130,6 +131,7 @@ int main()
         if(!start)
         {
             Cameras::LookAt::computePosition();
+
             Cameras::LookAt::computeViewMatrix();
             Projection::init();
             Projection::computeProjectionMatrix();
@@ -152,7 +154,7 @@ int main()
         }
         else
         {
-            Cameras::Free::computePosition();
+            Cameras::Free::updateCamera();
             Cameras::Free::computeViewMatrix();
             Projection::init();
             Projection::computeProjectionMatrix();

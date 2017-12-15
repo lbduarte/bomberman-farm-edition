@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "matrices.h"
 #include "Keyboard.h"
+#include "VirtualScene.h"
 
 namespace Cameras
 {
@@ -26,9 +27,13 @@ namespace Cameras
             static glm::vec4 upVector;
             static glm::mat4 viewMatrix;
 
+            static glm::vec4 movementVector;
+            static glm::vec4 bottomNearLeft;
+            static glm::vec4 topFarRight;
+
 
             void init(float a_theta, float a_phi, float a_distance, glm::vec4 camera_position_c, glm::vec4 camera_view_vector);
-            void computePosition();
+            void updateCamera();
             void computeViewMatrix();
 
             glm::mat4 getViewMatrix();
@@ -38,6 +43,10 @@ namespace Cameras
             void updateTheta(float dx);
             void updatePhi(float dy);
             void updateDistance(double yoffset);
+            glm::vec4 getPosition();
+            glm::vec4 getIncVector();
+            glm::vec4 getUpVector();
+            void updatePosition(glm::vec4 position);
     }
 }
 #endif // FREECAMERA_H

@@ -14,6 +14,7 @@
 #include "ObjectId.h"
 #include "Keyboard.h"
 
+
 #define NUM_CUBES 55
 namespace Graphics
 {
@@ -38,6 +39,8 @@ namespace Graphics
             void drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
             void drawWoodCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
             void drawHayCubes(GLint model_uniform, GLint object_id_uniform, Renderer renderer);
+            glm::vec4 checkCollision(glm::vec4 oldPosition, glm::vec4 newPosition, glm::vec4 bottomNearLeft, glm::vec4 topFarRight);
+            bool collided(glm::vec4 bottomNearLeft1, glm::vec4 topFarRight, glm::vec4 bottomNearLeft2, glm::vec4 topFarRight2);
     }
 }
 
