@@ -68,7 +68,7 @@ void VirtualScene::init(Loader loader)
             for (int k = 0; k < 2; k++)
                 cubes_positions[i][j][k] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
-    //Posições possíveis no mapa
+    //Posições possíveis no mapa {z,x}
     int positions[96][2] = {{-5,-5}, {-5,-4}, {-5,-3}, {-5,-2}, {-5,-1}, {-5,0}, {-5,1}, {-5,2}, {-5,3}, {-5,4}, {-5,5},
         {-4,-5}, {-4,-3}, {-4,-1}, {-4,1}, {-4,3}, {-4,5},
         {-3,-5}, {-3,-4}, {-3,-3}, {-3,-2}, {-3,-1}, {-3,0}, {-3,1}, {-3,2}, {-3,3}, {-3,4}, {-3,5},
@@ -133,11 +133,6 @@ void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Ren
         glUniform1i(object_id_uniform, COW);
         renderer.render(cow);
     }
-//        //desenha bomba
-//        glm::mat4 modelMatrix =  Matrix_Translate(1,-1.82,-2)*Matrix_Rotate_Y(M_PI/4)*Matrix_Scale(0.02,0.02,0.02);
-//        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-//        glUniform1i(object_id_uniform, BOMB);
-//        renderer.render(bomb);
 }
 
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
@@ -251,6 +246,23 @@ void VirtualScene::drawHayCubes(GLint model_uniform, GLint object_id_uniform, Re
         glUniform1i(object_id_uniform, HAYCUBE);
         renderer.render(cube);
     }
+}
+
+void VirtualScene::drawBomb(GLint model_uniform, GLint object_id_uniform, Renderer renderer, glm::vec4 position)
+{
+        //desenha bomba
+        bomb_position[0] = roundf(position.z);
+        bomb_position[1] = roundf(position.x);
+
+        glm::mat4 modelMatrix =  Matrix_Translate(bomb_position[1],-1.82,bomb_position[0])*Matrix_Rotate_Y(M_PI/4)*Matrix_Scale(0.02,0.02,0.02);
+        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniform1i(object_id_uniform, BOMB);
+        renderer.render(bomb);
+}
+
+void VirtualScene::explode()
+{
+
 }
 
 glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 newPosition, glm::vec4 bottomNearLeft, glm::vec4 topFarRight)

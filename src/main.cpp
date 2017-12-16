@@ -56,6 +56,7 @@
 #define M_PI 3.1415
 #define SECONDS 60
 #define BOMBS 20
+#define BOMB_TIME 5
 
 GLuint CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id); // Cria um programa de GPU
 
@@ -123,6 +124,11 @@ int main()
 
     int bombs = BOMBS;
     bool start = false;
+    bool activeBomb = false;
+
+    glm::vec4 bombPosition;
+
+    int bombCountdown;
 
     while (!Graphics::Window::shouldClose())
     {
@@ -162,10 +168,26 @@ int main()
             glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
             Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer, true);
 
+            if (Input::Keyboard::isKeyPressed(GLFW_KEY_SPACE)  && !activeBomb){
+                activeBomb = true;
+                bombPosition = Cameras::Free::getPosition();
+                bombCountdown = BOMB_TIME;
+            }
+            if(activeBomb && bombCountdown >0){
+                Graphics::VirtualScene::drawBomb(model_uniform, object_id_uniform, renderer, bombPosition);
+            }
+            if(bombCountdown == 0){
+                activeBomb = false;
+                //demolir blocos
+            }
+
             if(time != (int)glfwGetTime())
             {
                 time =(int)glfwGetTime();
                 seconds--;
+                if(activeBomb){
+                    bombCountdown--;
+                }
             }
 
             //Print # of bombs and # of remaining secs
