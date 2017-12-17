@@ -160,46 +160,57 @@ int main()
         }
         else
         {
-
-            Cameras::Free::updateCamera();
-            Cameras::Free::computeViewMatrix();
-
-            Projection::init();
-            Projection::computeProjectionMatrix();
-            glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
-            glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
-            Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer, true);
-
-            if (Input::Keyboard::isKeyPressed(GLFW_KEY_SPACE)  && !activeBomb){
-                activeBomb = true;
-                bombPosition = Cameras::Free::getPosition();
-                bombCountdown = BOMB_TIME;
+            //check endgame conditions
+            //TODO BOMB CHECK
+            if(seconds == 0 || bombs == 0){
+                //game over
+                //lost
+                float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                char buffer2[20] = "You lost :(";
+                TextRendering_PrintString(Graphics::Window::getWindow(), buffer2, charwidth, lineheight, 3.0f);
             }
-            if(activeBomb && bombCountdown > 0){
-                Graphics::VirtualScene::drawBomb(model_uniform, object_id_uniform, renderer, bombPosition);
-            }
-            if(bombCountdown == 0){
-                activeBomb = false;
-                //demolir blocos
-            }
+            else{
+                Cameras::Free::updateCamera();
+                Cameras::Free::computeViewMatrix();
 
-            if(time != (int)glfwGetTime())
-            {
-                time =(int)glfwGetTime();
-                seconds--;
-                if(activeBomb){
-                    bombCountdown--;
+                Projection::init();
+                Projection::computeProjectionMatrix();
+                glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
+                glUniformMatrix4fv(projection_uniform , 1 , GL_FALSE , glm::value_ptr(Projection::getProjectionMatrix()));
+                Graphics::VirtualScene::drawObjects(model_uniform, object_id_uniform, renderer, true);
+
+                if (Input::Keyboard::isKeyPressed(GLFW_KEY_SPACE)  && !activeBomb){
+                    activeBomb = true;
+                    bombPosition = Cameras::Free::getPosition();
+                    bombCountdown = BOMB_TIME;
+                    bombs--;
                 }
+                if(activeBomb && bombCountdown > 0){
+                    Graphics::VirtualScene::drawBomb(model_uniform, object_id_uniform, renderer, bombPosition);
+                }
+                if(bombCountdown == 0){
+                    activeBomb = false;
+                    //demolir blocos
+                }
+
+                if(time != (int)glfwGetTime())
+                {
+                    time =(int)glfwGetTime();
+                    seconds--;
+                    if(activeBomb){
+                        bombCountdown--;
+                    }
+                }
+
+                //Print # of bombs and # of remaining secs
+                char buffer[25];
+                int numchars=25;
+                sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
+                float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
             }
-
-            //Print # of bombs and # of remaining secs
-            char buffer[25];
-            int numchars=25;
-            sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
-            float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
-            float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
-            TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
-
         }
         Shaders::stop();
         Graphics::Window::updateScreen();
