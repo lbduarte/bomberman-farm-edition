@@ -160,8 +160,10 @@ int main()
         }
         else
         {
+
             Cameras::Free::updateCamera();
             Cameras::Free::computeViewMatrix();
+
             Projection::init();
             Projection::computeProjectionMatrix();
             glUniformMatrix4fv(view_uniform       , 1 , GL_FALSE , glm::value_ptr(Cameras::Free::getViewMatrix()));
