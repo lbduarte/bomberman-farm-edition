@@ -194,28 +194,28 @@ void VirtualScene::drawWoodCubes(GLint model_uniform, GLint object_id_uniform, R
         {
             modelMatrix = Matrix_Translate((0+j),-1.5,(-2+i));
             cubes_positions[5+i][5+j][0] = modelMatrix*box_min;
-            cubes_positions[5+i][5+j][0] = modelMatrix*box_max;
+            cubes_positions[5+i][5+j][1] = modelMatrix*box_max;
             glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniform1i(object_id_uniform, WOODCUBE);
             renderer.render(cube);
 
             modelMatrix = Matrix_Translate((0-j),-1.5,(-2+i));
             cubes_positions[5+i][5-j][0] = modelMatrix*box_min;
-            cubes_positions[5+i][5-j][0] = modelMatrix*box_max;
+            cubes_positions[5+i][5-j][1] = modelMatrix*box_max;
             glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniform1i(object_id_uniform, WOODCUBE);
             renderer.render(cube);
 
             modelMatrix = Matrix_Translate((0+j),-1.5,(-2-i));
             cubes_positions[5-i][5+j][0] = modelMatrix*box_min;
-            cubes_positions[5-i][5+j][0] = modelMatrix*box_max;
+            cubes_positions[5-i][5+j][1] = modelMatrix*box_max;
             glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniform1i(object_id_uniform, WOODCUBE);
             renderer.render(cube);
 
             modelMatrix = Matrix_Translate((0-j),-1.5,(-2-i));
             cubes_positions[5-i][5-j][0] = modelMatrix*box_min;
-            cubes_positions[5-i][5-j][0] = modelMatrix*box_max;
+            cubes_positions[5-i][5-j][1] = modelMatrix*box_max;
             glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
             glUniform1i(object_id_uniform, WOODCUBE);
             renderer.render(cube);
