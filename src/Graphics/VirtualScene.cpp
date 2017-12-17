@@ -138,8 +138,8 @@ void VirtualScene::drawObjects(GLint model_uniform, GLint object_id_uniform, Ren
 void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Renderer renderer)
 {
     glm::mat4 modelMatrix;
-    glm::vec4 plan_min = glm::vec4(-1.0f,0.0f,-1.0f,1.0f);
-    glm::vec4 plan_max = glm::vec4(1.0f,0.0f,1.0f,1.0f);
+    glm::vec4 plan_min = glm::vec4(-1.0f,0.0f,1.0f,1.0f);
+    glm::vec4 plan_max = glm::vec4(1.0f,0.0f,-1.0f,1.0f);
     //direita
     modelMatrix = Matrix_Translate(5.5001,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
     wall_positions[0][0] = modelMatrix*plan_min;
@@ -184,8 +184,8 @@ void VirtualScene::drawWoodCubes(GLint model_uniform, GLint object_id_uniform, R
 {
     glm::mat4 modelMatrix;
 
-    glm::vec4 box_min = glm::vec4(-0.5f,-0.5f,-0.5f,1.0f);
-    glm::vec4 box_max = glm::vec4(0.5f,0.5f,0.5f,1.0f);
+    glm::vec4 box_min = glm::vec4(-0.5f,-0.5f,0.5f,1.0f);
+    glm::vec4 box_max = glm::vec4(0.5f,0.5f,-0.5f,1.0f);
     int i = 0;
     while(i<5)
     {
@@ -230,8 +230,8 @@ void VirtualScene::drawHayCubes(GLint model_uniform, GLint object_id_uniform, Re
 {
     glm::mat4 modelMatrix;
 
-    glm::vec4 box_min = glm::vec4(-0.5f,-0.5f,-0.5f,1.0f);
-    glm::vec4 box_max = glm::vec4(0.5f,0.5f,0.5f,1.0f);
+    glm::vec4 box_min = glm::vec4(-0.5f,-0.5f,0.5f,1.0f);
+    glm::vec4 box_max = glm::vec4(0.5f,0.5f,-0.5f,1.0f);
 
     int posx;
     int posz;
@@ -265,13 +265,11 @@ void VirtualScene::explode()
 
 }
 
-glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 newPosition, glm::vec4 bottomNearLeft, glm::vec4 topFarRight)
+glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 movementVector)
 {
-    glm::vec2 collisionVector(1.0f, 1.0f);
-    glm::vec4 movementVector = newPosition - oldPosition;
+    glm::vec4 newPosition = oldPosition + movementVector;
 
-    if (length(movementVector) > 0)
-    {
+    Cameras::Free::updateBoundingBox(newPosition);
 
         for (int i = 0; i < 11; i++)
             for (int j = 0; j < 11; j++)
@@ -286,36 +284,24 @@ glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 newPosit
                 {
                     //std::cout << "COLIDIU!!!" << std::endl;
                     // Tem cubo aqui entao testa colisao
-                    if(collided(bottomNearLeft, topFarRight, cubes_positions[i][j][0], cubes_positions[i][j][1]))
+                    if(collided(cubes_positions[i][j][0], cubes_positions[i][j][1]))
                     {
-                        std::cout << "COLIDIU!!!" << std::endl;
-                        //collisionVector.x = 0.0f;
-                        //collisionVector.y = 0.0f;
+                        return oldPosition;
                     }
-
 
                 }
             }
-    }
 
 
-    return glm::vec4(collisionVector.x, 0.0f, collisionVector.y, 0.0f);
+
+
+
+    return oldPosition + movementVector;
 }
 
-bool VirtualScene::collided(glm::vec4 bottomNearLeft, glm::vec4 topFarRight, glm::vec4 bottomNearLeft2, glm::vec4 topFarRight2)
-    {
-        glm::vec4 distance1 = bottomNearLeft - topFarRight2;
-        glm::vec4 distance2 = bottomNearLeft2 - topFarRight;
-        glm::vec4 distances;
-
-
-        distances.x = distance1.x > distance2.x ? distance1.x : distance2.x;
-        distances.y = distance1.y > distance2.y ? distance1.y : distance2.y;
-        distances.z = distance1.z > distance2.z ? distance1.z : distance2.z;
-
-        float maxDistance = distances.x > distances.y ? distances.x : distances.y;
-        if (maxDistance < distances.z)
-            maxDistance = distances.z;
-
-        return (maxDistance < 0);
-    }
+bool VirtualScene::collided(glm::vec4 bottomNearLeft, glm::vec4 topFarRight)
+{
+  return (Cameras::Free::getBottomNearLeft().x <= topFarRight.x && Cameras::Free::getTopFarRight().x >= bottomNearLeft.x) &&
+         (Cameras::Free::getBottomNearLeft().y <= topFarRight.y && Cameras::Free::getTopFarRight().y >= bottomNearLeft.y) &&
+         (Cameras::Free::getBottomNearLeft().z >= topFarRight.z && Cameras::Free::getTopFarRight().z <= bottomNearLeft.z);
+}

@@ -39,7 +39,12 @@ void Free::updateCamera()
     if (Input::Keyboard::isKeyPressed(GLFW_KEY_S))
         movementVector -= incVector;
 
-    position_C += movementVector * Graphics::VirtualScene::checkCollision(position_C, position_C + movementVector, bottomNearLeft, topFarRight);
+    glm::vec4 newPosition = Graphics::VirtualScene::checkCollision(position_C, movementVector);
+
+    position_C = newPosition;
+
+    updateBoundingBox(position_C);
+
 
     viewVector = glm::vec4(x, y, z, 0.0f);
 }
@@ -109,5 +114,21 @@ glm::vec4 Free::getIncVector()
 glm::vec4 Free::getUpVector()
 {
     return upVector;
+}
+
+glm::vec4 Free::getBottomNearLeft()
+{
+    return bottomNearLeft;
+}
+
+glm::vec4 Free::getTopFarRight()
+{
+    return topFarRight;
+}
+
+void Free::updateBoundingBox(glm::vec4 position)
+{
+    bottomNearLeft = glm::vec4(position.x - 0.25f, position.y - 0.25f, position.z + 0.25f, 0.0f);
+    topFarRight = glm::vec4(position.x + 0.25f, position.y + 0.25f, position.z - 0.25f, 0.0f);
 }
 

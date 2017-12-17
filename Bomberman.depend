@@ -4866,10 +4866,10 @@
 	"utils.h"
 	"dejavufont.h"
 
-1513327585 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\freecamera.cpp
+1513487776 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\freecamera.cpp
 	"FreeCamera.h"
 
-1513327595 c:\users\cliente\documents\github\bomberman-farm-edition\include\freecamera.h
+1513487565 c:\users\cliente\documents\github\bomberman-farm-edition\include\freecamera.h
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<glm/mat4x4.hpp>
@@ -5426,10 +5426,10 @@
 	<GLFW/glfw3.h>
 	"RawModel.h"
 
-1513331813 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\graphics\virtualscene.cpp
+1513488161 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\graphics\virtualscene.cpp
 	"VirtualScene.h"
 
-1513330522 c:\users\cliente\documents\github\bomberman-farm-edition\include\virtualscene.h
+1513455225 c:\users\cliente\documents\github\bomberman-farm-edition\include\virtualscene.h
 	<glm/mat4x4.hpp>
 	<glm/vec4.hpp>
 	<glm/gtc/type_ptr.hpp>
@@ -5442,6 +5442,7 @@
 	"Loader.h"
 	"ObjectId.h"
 	"Keyboard.h"
+	"FreeCamera.h"
 
 1513276595 c:\users\cliente\documents\github\bomberman-farm-edition\include\objectid.h
 
@@ -5477,7 +5478,7 @@
 1513276596 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\lookatcamera.cpp
 	"LookAtCamera.h"
 
-1513326429 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\main.cpp
+1513486878 source:c:\users\cliente\documents\github\bomberman-farm-edition\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>

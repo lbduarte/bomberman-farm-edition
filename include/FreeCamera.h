@@ -47,6 +47,9 @@ namespace Cameras
             glm::vec4 getIncVector();
             glm::vec4 getUpVector();
             void updatePosition(glm::vec4 position);
+            glm::vec4 getBottomNearLeft();
+            glm::vec4 getTopFarRight();
+            void updateBoundingBox(glm::vec4 position);
     }
 }
 #endif // FREECAMERA_H
