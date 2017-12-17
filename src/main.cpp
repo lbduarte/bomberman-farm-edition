@@ -54,8 +54,8 @@
 #define HEIGHT  600
 
 #define M_PI 3.1415
-#define SECONDS 60
-#define BOMBS 20
+#define SECONDS 150
+#define BOMBS 25
 #define BOMB_TIME 5
 
 GLuint CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id); // Cria um programa de GPU
@@ -119,16 +119,18 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-    int seconds = SECONDS;
+    int seconds = SECONDS; //tempo de jogo
     int time = (int)glfwGetTime();
 
-    int bombs = BOMBS;
-    bool start = false;
-    bool activeBomb = false;
+    int bombs = BOMBS; //numero de bombas disponiveis
+    bool start = false; //flag para controlar se o jogador já apertou enter para começar o jogo
+    bool activeBomb = false; //flag para controlar se tem uma bomba ativa
 
-    glm::vec4 bombPosition;
+    bool deadByBomb = false; //flag para sinalizar quando o jogador morrer na explosão da bomba
 
-    int bombCountdown;
+    glm::vec4 bombPosition; //posição da bomba ativa
+
+    int bombCountdown = BOMB_TIME; //contador pro tempo da bomba
 
     while (!Graphics::Window::shouldClose())
     {
@@ -167,7 +169,7 @@ int main()
             //check endgame conditions
             //check defeat :c
             //TODO BOMB CHECK
-            if(seconds == 0 || bombs == 0){
+            if(seconds == 0 || bombs == 0 || deadByBomb){
                 //game over
                 //lost
                 float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
@@ -196,7 +198,6 @@ int main()
                 if (Input::Keyboard::isKeyPressed(GLFW_KEY_SPACE)  && !activeBomb){
                     activeBomb = true;
                     bombPosition = Cameras::Free::getPosition();
-                    bombCountdown = BOMB_TIME;
                     bombs--;
                 }
                 if(activeBomb && bombCountdown > 0){
@@ -204,7 +205,21 @@ int main()
                 }
                 if(bombCountdown == 0){
                     activeBomb = false;
-                    //demolir blocos
+                    bombCountdown = BOMB_TIME;
+                    Graphics::VirtualScene::explode();
+                    //verifica se o jogador também vai ser explodido
+                    int bombZ = roundf(bombPosition.z);
+                    int bombX = roundf(bombPosition.x);
+                    glm::vec4 player = Cameras::Free::getPosition();
+                    int playerZ = roundf(player.z);
+                    int playerX = roundf(player.x);
+                    if((playerX == bombX && playerZ == bombZ)
+                       || (playerX == bombX+1 && playerZ == bombZ)
+                       || (playerX == bombX-1 && playerZ == bombZ)
+                       || (playerX == bombX && playerZ == bombZ+1)
+                       || (playerX == bombX && playerZ == bombZ-1)){
+                        deadByBomb = true;
+                       }
                 }
 
                 if(time != (int)glfwGetTime())
@@ -216,13 +231,27 @@ int main()
                     }
                 }
 
-                //Print # of bombs and # of remaining secs
-                char buffer[25];
-                int numchars=25;
-                sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
-                float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
-                float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
-                TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+                if(activeBomb)
+                {
+                    //Print # of bombs and # of remaining secs
+                    char buffer[44];
+                    int numchars=44;
+                    sprintf ( buffer, "%ds to explode      %d bombs      %ds", bombCountdown, bombs, seconds );
+                    float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                    float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                    TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+
+                }
+                else
+                {
+                    //Print # of bombs and # of remaining secs
+                    char buffer[25];
+                    int numchars=25;
+                    sprintf ( buffer, "%d bombs      %ds", bombs, seconds );
+                    float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                    float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                    TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+                }
             }
         }
         Shaders::stop();

@@ -95,12 +95,18 @@ void VirtualScene::init(Loader loader)
     }
     num_positions--;
 
+    // inicializa ids com -1
+    for(int i =0;i<11;i++)
+        for(int j =0;j<11;j++)
+            hay_cubes_ids[i][j] = -1;
+
     //Posição dos cubos de palha
     for(int i = 0; i<num_cubes; i++)
     {
         int index = rand() % num_positions; // escolhe posição aleatória
         random_positions[i][0] = positions[index][0];
         random_positions[i][1] = positions[index][1];
+        hay_cubes_ids[5+positions[index][0]][5+positions[index][1]] = i;
         for(int j=index; j<num_positions-1; j++) //remove posição para os próximos sorteios
         {
             positions[j][0]=positions[j+1][0];
@@ -256,10 +262,10 @@ void VirtualScene::drawHayCubes(GLint model_uniform, GLint object_id_uniform, Re
 void VirtualScene::drawBomb(GLint model_uniform, GLint object_id_uniform, Renderer renderer, glm::vec4 position)
 {
         //desenha bomba
-        bomb_position[0] = roundf(position.z);
+        bomb_position[0] = 2+roundf(position.z);
         bomb_position[1] = roundf(position.x);
 
-        glm::mat4 modelMatrix =  Matrix_Translate(bomb_position[1],-1.82,bomb_position[0])*Matrix_Rotate_Y(M_PI/4)*Matrix_Scale(0.02,0.02,0.02);
+        glm::mat4 modelMatrix =  Matrix_Translate(bomb_position[1],-1.82,-2+bomb_position[0])*Matrix_Rotate_Y(M_PI/4)*Matrix_Scale(0.02,0.02,0.02);
         glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         glUniform1i(object_id_uniform, BOMB);
         renderer.render(bomb);
@@ -276,7 +282,92 @@ int VirtualScene::getCowPositionZ()
 }
 void VirtualScene::explode()
 {
+    int bombX = bomb_position[1];
+    int bombZ = bomb_position[0];
+    int index;
 
+    if(bombX!=5){
+        //remove um para direita
+
+        index = hay_cubes_ids[5+bombZ][5+bombX+1];
+        if(index != -1){
+            for(int j=index; j<num_cubes-1; j++) //remove cubo
+            {
+                random_positions[j][0]=random_positions[j+1][0];
+                random_positions[j][1]=random_positions[j+1][1];
+            }
+            num_cubes--;
+            hay_cubes_ids[5+bombZ][5+bombX+1] = -1;
+            for(int i =0;i<11;i++)
+                for(int j =0;j<11;j++){
+                    if(hay_cubes_ids[i][j]>index)
+                        hay_cubes_ids[i][j]--;
+                }
+        }
+        cubes_positions[5+bombZ][5+bombX+1][0]=glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        cubes_positions[5+bombZ][5+bombX+1][1]=glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    }
+    if(bombX!=-5){
+        //remove um para esquerda
+        index = hay_cubes_ids[5+bombZ][5+bombX-1];
+        if(index != -1){
+            for(int j=index; j<num_cubes-1; j++) //remove cubo
+            {
+                random_positions[j][0]=random_positions[j+1][0];
+                random_positions[j][1]=random_positions[j+1][1];
+            }
+            num_cubes--;
+            hay_cubes_ids[5+bombZ][5+bombX-1] = -1;
+            for(int i =0;i<11;i++)
+                for(int j =0;j<11;j++){
+                    if(hay_cubes_ids[i][j]>index)
+                        hay_cubes_ids[i][j]--;
+                }
+        }
+        cubes_positions[5+bombZ][5+bombX-1][0]=glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        cubes_positions[5+bombZ][5+bombX-1][1]=glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    }
+
+    if(bombZ!=5){
+        //remove um para trás
+        index = hay_cubes_ids[5+bombZ+1][5+bombX];
+        if(index != -1){
+            for(int j=index; j<num_cubes-1; j++) //remove cubo
+            {
+                random_positions[j][0]=random_positions[j+1][0];
+                random_positions[j][1]=random_positions[j+1][1];
+            }
+            num_cubes--;
+            hay_cubes_ids[5+bombZ+1][5+bombX] = -1;
+            for(int i =0;i<11;i++)
+                for(int j =0;j<11;j++){
+                    if(hay_cubes_ids[i][j]>index)
+                        hay_cubes_ids[i][j]--;
+                }
+        }
+        cubes_positions[5+bombZ+1][5+bombX][0]=glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        cubes_positions[5+bombZ+1][5+bombX][1]=glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    }
+    if(bombZ!=-5){
+        //remove um para frente
+        index = hay_cubes_ids[5+bombZ-1][5+bombX];
+        if(index != -1){
+            for(int j=index; j<num_cubes-1; j++) //remove cubo
+            {
+                random_positions[j][0]=random_positions[j+1][0];
+                random_positions[j][1]=random_positions[j+1][1];
+            }
+            num_cubes--;
+            hay_cubes_ids[5+bombZ-1][5+bombX] = -1;
+            for(int i =0;i<11;i++)
+                for(int j =0;j<11;j++){
+                    if(hay_cubes_ids[i][j]>index)
+                        hay_cubes_ids[i][j]--;
+                }
+        }
+        cubes_positions[5+bombZ-1][5+bombX][0] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        cubes_positions[5+bombZ-1][5+bombX][1] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    }
 }
 
 glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 movementVector)
