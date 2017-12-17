@@ -11,8 +11,8 @@ void Free::init(float a_theta, float a_phi, float a_distance, glm::vec4 camera_p
     viewVector = camera_view_vector;
     position_C = camera_position_c;
     upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-    bottomNearLeft = glm::vec4(position_C.x - 0.25f, position_C.y - 0.25f, position_C.z + 0.25f, 0.0f);
-    topFarRight = glm::vec4(position_C.x + 0.25f, position_C.y + 0.25f, position_C.z - 0.25f, 0.0f);
+    bottomNearLeft = glm::vec4(position_C.x - 0.15f, position_C.y - 0.15f, position_C.z + 0.15f, 0.0f);
+    topFarRight = glm::vec4(position_C.x + 0.15f, position_C.y + 0.15f, position_C.z - 0.15f, 0.0f);
     movementVector = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 

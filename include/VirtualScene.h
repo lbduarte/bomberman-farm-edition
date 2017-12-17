@@ -14,7 +14,7 @@
 #include "ObjectId.h"
 #include "Keyboard.h"
 #include "FreeCamera.h"
-
+#include <cmath>
 
 #define NUM_CUBES 55
 namespace Graphics
@@ -44,9 +44,12 @@ namespace Graphics
             void drawBomb(GLint model_uniform, GLint object_id_uniform, Renderer renderer, glm::vec4 position);
             void explode();
             glm::vec4 checkCollision(glm::vec4 oldPosition, glm::vec4 movementVector);
+            bool collidedWithPlane(glm::vec4 plan_min, glm::vec4 plan_max, glm::vec4 newPosition);
             bool collided(glm::vec4 bottomNearLeft, glm::vec4 topFarRight);
             int getCowPositionX();
             int getCowPositionZ();
+
+
     }
 }
 

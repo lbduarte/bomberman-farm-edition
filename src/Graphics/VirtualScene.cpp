@@ -139,11 +139,16 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
 {
     glm::mat4 modelMatrix;
     glm::vec4 plan_min = glm::vec4(-1.0f,0.0f,1.0f,1.0f);
-    glm::vec4 plan_max = glm::vec4(1.0f,0.0f,-1.0f,1.0f);
+    glm::vec4 plan_max_dir = glm::vec4(1.0f,-0.2f,-1.0f,1.0f);
+    glm::vec4 plan_max_esq = glm::vec4(1.0f,-0.2f,-1.0f,1.0f);
+    glm::vec4 plan_max_fre = glm::vec4(1.0f,0.0f,0.0f,1.0f);
+    glm::vec4 plan_max_tras = glm::vec4(1.0f,0.0f,-1.0f,1.0f);
+
     //direita
     modelMatrix = Matrix_Translate(5.5001,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
+
     wall_positions[0][0] = modelMatrix*plan_min;
-    wall_positions[0][1] = modelMatrix*plan_max;
+    wall_positions[0][1] = modelMatrix*plan_max_dir;
     glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniform1i(object_id_uniform, WALL);
     renderer.render(plan);
@@ -151,7 +156,7 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
     //esquerda
     modelMatrix = Matrix_Translate(-5.5001,-1,-2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
     wall_positions[1][0] = modelMatrix*plan_min;
-    wall_positions[1][1] = modelMatrix*plan_max;
+    wall_positions[1][1] = modelMatrix*plan_max_esq;
     glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniform1i(object_id_uniform, WALL);
     renderer.render(plan);
@@ -165,7 +170,7 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
     //fundo
     modelMatrix = Matrix_Translate(0,-1,-7.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
     wall_positions[2][0] = modelMatrix*plan_min;
-    wall_positions[2][1] = modelMatrix*plan_max;
+    wall_positions[2][1] = modelMatrix*plan_max_tras;
     glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniform1i(object_id_uniform, WALL);
     renderer.render(plan);
@@ -173,7 +178,7 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
     //frente
     modelMatrix = Matrix_Translate(0,-1,3.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
     wall_positions[3][0] = modelMatrix*plan_min;
-    wall_positions[3][1] = modelMatrix*plan_max;
+    wall_positions[3][1] = modelMatrix*plan_max_fre;
     glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniform1i(object_id_uniform, WALL);
     renderer.render(plan);
@@ -293,7 +298,7 @@ glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 movement
                 {
                     //std::cout << "COLIDIU!!!" << std::endl;
                     // Tem cubo aqui entao testa colisao
-                    if(collided(cubes_positions[i][j][0], cubes_positions[i][j][1]))
+                    if (collided(cubes_positions[i][j][0], cubes_positions[i][j][1]))
                     {
                         return oldPosition;
                     }
@@ -301,9 +306,15 @@ glm::vec4 VirtualScene::checkCollision(glm::vec4 oldPosition, glm::vec4 movement
                 }
             }
 
-
-
-
+        for (int i = 0; i < 4; i++)
+        {
+            //std::cout << wall_positions[i][0].x << " " << wall_positions[i][1].x << std::endl;
+            //std::cin.get();
+            if (collidedWithPlane(wall_positions[i][0], wall_positions[i][1], newPosition))
+            {
+                return oldPosition;
+            }
+        }
 
     return oldPosition + movementVector;
 }
@@ -314,3 +325,12 @@ bool VirtualScene::collided(glm::vec4 bottomNearLeft, glm::vec4 topFarRight)
          (Cameras::Free::getBottomNearLeft().y <= topFarRight.y && Cameras::Free::getTopFarRight().y >= bottomNearLeft.y) &&
          (Cameras::Free::getBottomNearLeft().z >= topFarRight.z && Cameras::Free::getTopFarRight().z <= bottomNearLeft.z);
 }
+
+bool VirtualScene::collidedWithPlane(glm::vec4 plan_min, glm::vec4 plan_max, glm::vec4 newPosition)
+{
+
+  return (newPosition.x <= plan_max.x && newPosition.x >= plan_min.x) &&
+         (newPosition.y <= plan_max.y && newPosition.y >= plan_min.y) &&
+         (newPosition.z >= plan_max.z && newPosition.z <= plan_min.z);
+}
+
