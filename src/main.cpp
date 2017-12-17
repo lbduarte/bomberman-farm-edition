@@ -54,8 +54,8 @@
 #define HEIGHT  600
 
 #define M_PI 3.1415
-#define SECONDS 60
-#define BOMBS 20
+#define SECONDS 150
+#define BOMBS 25
 #define BOMB_TIME 5
 
 GLuint CreateGpuProgram(GLuint vertex_shader_id, GLuint fragment_shader_id); // Cria um programa de GPU
@@ -231,13 +231,27 @@ int main()
                     }
                 }
 
-                //Print # of bombs and # of remaining secs
-                char buffer[25];
-                int numchars=25;
-                sprintf ( buffer, "%d bombs      %dsecs", bombs, seconds );
-                float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
-                float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
-                TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+                if(activeBomb)
+                {
+                    //Print # of bombs and # of remaining secs
+                    char buffer[44];
+                    int numchars=44;
+                    sprintf ( buffer, "%ds to explode      %d bombs      %ds", bombCountdown, bombs, seconds );
+                    float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                    float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                    TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+
+                }
+                else
+                {
+                    //Print # of bombs and # of remaining secs
+                    char buffer[25];
+                    int numchars=25;
+                    sprintf ( buffer, "%d bombs      %ds", bombs, seconds );
+                    float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                    float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                    TextRendering_PrintString(Graphics::Window::getWindow(), buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
+                }
             }
         }
         Shaders::stop();
