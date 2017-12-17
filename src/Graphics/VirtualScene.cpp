@@ -85,10 +85,8 @@ void VirtualScene::init(Loader loader)
     // Posição da vaca
     int num_positions = sizeof(positions)/sizeof(positions[0]);
     int index = rand() % num_positions;
-//    cow_position[0] = positions[index][0];
-//    cow_position[1] = positions[index][1];
-    cow_position[0] = 4;
-    cow_position[1] = 5;
+    cow_position[0] = positions[index][0];
+    cow_position[1] = positions[index][1];
 
     for(int i=index; i<num_positions-1; i++)
     {
