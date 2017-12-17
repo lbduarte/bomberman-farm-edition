@@ -173,7 +173,7 @@ int main()
                 bombPosition = Cameras::Free::getPosition();
                 bombCountdown = BOMB_TIME;
             }
-            if(activeBomb && bombCountdown >0){
+            if(activeBomb && bombCountdown > 0){
                 Graphics::VirtualScene::drawBomb(model_uniform, object_id_uniform, renderer, bombPosition);
             }
             if(bombCountdown == 0){
