@@ -119,16 +119,18 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-    int seconds = SECONDS;
+    int seconds = SECONDS; //tempo de jogo
     int time = (int)glfwGetTime();
 
-    int bombs = BOMBS;
-    bool start = false;
-    bool activeBomb = false;
+    int bombs = BOMBS; //numero de bombas disponiveis
+    bool start = false; //flag para controlar se o jogador já apertou enter para começar o jogo
+    bool activeBomb = false; //flag para controlar se tem uma bomba ativa
 
-    glm::vec4 bombPosition;
+    bool deadByBomb = false; //flag para sinalizar quando o jogador morrer na explosão da bomba
 
-    int bombCountdown;
+    glm::vec4 bombPosition; //posição da bomba ativa
+
+    int bombCountdown = BOMB_TIME; //contador pro tempo da bomba
 
     while (!Graphics::Window::shouldClose())
     {
@@ -167,7 +169,7 @@ int main()
             //check endgame conditions
             //check defeat :c
             //TODO BOMB CHECK
-            if(seconds == 0 || bombs == 0){
+            if(seconds == 0 || bombs == 0 || deadByBomb){
                 //game over
                 //lost
                 float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
@@ -196,7 +198,6 @@ int main()
                 if (Input::Keyboard::isKeyPressed(GLFW_KEY_SPACE)  && !activeBomb){
                     activeBomb = true;
                     bombPosition = Cameras::Free::getPosition();
-                    bombCountdown = BOMB_TIME;
                     bombs--;
                 }
                 if(activeBomb && bombCountdown > 0){
@@ -204,7 +205,21 @@ int main()
                 }
                 if(bombCountdown == 0){
                     activeBomb = false;
-                    //demolir blocos
+                    bombCountdown = BOMB_TIME;
+                    Graphics::VirtualScene::explode();
+                    //verifica se o jogador também vai ser explodido
+                    int bombZ = roundf(bombPosition.z);
+                    int bombX = roundf(bombPosition.x);
+                    glm::vec4 player = Cameras::Free::getPosition();
+                    int playerZ = roundf(player.z);
+                    int playerX = roundf(player.x);
+                    if((playerX == bombX && playerZ == bombZ)
+                       || (playerX == bombX+1 && playerZ == bombZ)
+                       || (playerX == bombX-1 && playerZ == bombZ)
+                       || (playerX == bombX && playerZ == bombZ+1)
+                       || (playerX == bombX && playerZ == bombZ-1)){
+                        deadByBomb = true;
+                       }
                 }
 
                 if(time != (int)glfwGetTime())

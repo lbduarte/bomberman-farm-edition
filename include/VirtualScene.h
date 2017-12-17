@@ -29,6 +29,7 @@ namespace Graphics
 
             static glm::vec4 wall_positions[4][2];
             static glm::vec4 cubes_positions[11][11][2];
+            static int hay_cubes_ids[11][11]; //índice do cubo no random_positions
 
             static int num_cubes = NUM_CUBES;
             static int random_positions[NUM_CUBES][2];
