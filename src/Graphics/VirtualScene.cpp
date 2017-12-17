@@ -85,8 +85,10 @@ void VirtualScene::init(Loader loader)
     // Posição da vaca
     int num_positions = sizeof(positions)/sizeof(positions[0]);
     int index = rand() % num_positions;
-    cow_position[0] = positions[index][0];
-    cow_position[1] = positions[index][1];
+//    cow_position[0] = positions[index][0];
+//    cow_position[1] = positions[index][1];
+    cow_position[0] = 4;
+    cow_position[1] = 5;
 
     for(int i=index; i<num_positions-1; i++)
     {
@@ -162,21 +164,21 @@ void VirtualScene::drawPlans(GLint model_uniform, GLint object_id_uniform, Rende
     glUniform1i(object_id_uniform, FLOOR);
     renderer.render(plan);
 
-        //fundo
-        modelMatrix = Matrix_Translate(0,-1,-7.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
-        wall_positions[2][0] = modelMatrix*plan_min;
-        wall_positions[2][1] = modelMatrix*plan_max;
-        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        glUniform1i(object_id_uniform, WALL);
-        renderer.render(plan);
+    //fundo
+    modelMatrix = Matrix_Translate(0,-1,-7.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
+    wall_positions[2][0] = modelMatrix*plan_min;
+    wall_positions[2][1] = modelMatrix*plan_max;
+    glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniform1i(object_id_uniform, WALL);
+    renderer.render(plan);
 
-        //frente
-        modelMatrix = Matrix_Translate(0,-1,3.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
-        wall_positions[3][0] = modelMatrix*plan_min;
-        wall_positions[3][1] = modelMatrix*plan_max;
-        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        glUniform1i(object_id_uniform, WALL);
-        renderer.render(plan);
+    //frente
+    modelMatrix = Matrix_Translate(0,-1,3.5001)*Matrix_Rotate_Y(M_PI/2)*Matrix_Rotate_Z(M_PI/2)*Matrix_Scale(1,1,5.5001);
+    wall_positions[3][0] = modelMatrix*plan_min;
+    wall_positions[3][1] = modelMatrix*plan_max;
+    glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniform1i(object_id_uniform, WALL);
+    renderer.render(plan);
 
 }
 
@@ -260,6 +262,15 @@ void VirtualScene::drawBomb(GLint model_uniform, GLint object_id_uniform, Render
         renderer.render(bomb);
 }
 
+int VirtualScene::getCowPositionX()
+{
+    return cow_position[1];
+}
+
+int VirtualScene::getCowPositionZ()
+{
+    return cow_position[0];
+}
 void VirtualScene::explode()
 {
 

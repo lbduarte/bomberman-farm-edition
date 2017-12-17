@@ -160,15 +160,28 @@ int main()
         }
         else
         {
+            int player_position[2];
+            player_position[0] = roundf(Cameras::Free::getPosition().z);
+            player_position[1] = roundf(Cameras::Free::getPosition().x);
+
             //check endgame conditions
+            //check defeat :c
             //TODO BOMB CHECK
             if(seconds == 0 || bombs == 0){
                 //game over
                 //lost
                 float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
                 float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
-                char buffer2[20] = "You lost :(";
-                TextRendering_PrintString(Graphics::Window::getWindow(), buffer2, charwidth, lineheight, 3.0f);
+                char buffer[20] = "You lost :(";
+                TextRendering_PrintString(Graphics::Window::getWindow(), buffer, charwidth, lineheight, 3.0f);
+            }
+            //check victory \o/
+            else if(player_position[0] == (-2+Graphics::VirtualScene::getCowPositionZ()) && player_position[1] == Graphics::VirtualScene::getCowPositionX())
+            {
+                float lineheight = TextRendering_LineHeight(Graphics::Window::getWindow());
+                float charwidth = TextRendering_CharWidth(Graphics::Window::getWindow());
+                char buffer[20] = "You won :D";
+                TextRendering_PrintString(Graphics::Window::getWindow(), buffer, charwidth, lineheight, 3.0f);
             }
             else{
                 Cameras::Free::updateCamera();

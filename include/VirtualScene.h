@@ -45,6 +45,8 @@ namespace Graphics
             void explode();
             glm::vec4 checkCollision(glm::vec4 oldPosition, glm::vec4 movementVector);
             bool collided(glm::vec4 bottomNearLeft, glm::vec4 topFarRight);
+            int getCowPositionX();
+            int getCowPositionZ();
     }
 }
 
